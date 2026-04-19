@@ -32,61 +32,49 @@
     }
     .main {
       max-width:1200px;
-      margin:40px auto;
+      margin:30px auto;
       padding:0 20px;
       display:flex;
-      gap:40px;
+      gap:30px;
       flex-wrap:wrap;
     }
-    .content { flex:2; min-width:320px; }
+    .content { flex:2; min-width:300px; }
     .sidebar { flex:1; min-width:280px; }
 
     .card-grid {
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
-      gap:25px;
+      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+      gap:20px;
     }
     .card {
       background:white;
       border-radius:12px;
       overflow:hidden;
-      box-shadow:0 5px 20px rgba(0,0,0,0.08);
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
     }
+    .card:hover { transform:translateY(-8px); }
     .card img {
       width:100%;
-      height:190px;
+      height:180px;
       object-fit:cover;
     }
-    .card-body {
-      padding:18px;
-    }
-    .card h3 { margin:0 0 8px 0; font-size:18px; }
-    .card p { margin:0; color:#555; font-size:15px; }
+    .card-body { padding:15px; }
 
-    .sidebar h3 {
-      margin:0 0 15px 0;
-      font-size:20px;
-      color:#1976d2;
-    }
-    .tags {
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
     .tag {
+      display:inline-block;
       background:#e3f2fd;
       color:#1976d2;
-      padding:8px 16px;
-      border-radius:30px;
-      font-size:14px;
-      cursor:pointer;
+      padding:6px 14px;
+      border-radius:20px;
+      font-size:13px;
+      margin:4px 4px 4px 0;
     }
     .insta {
       background:white;
       padding:20px;
       border-radius:12px;
-      box-shadow:0 5px 20px rgba(0,0,0,0.08);
-      margin-top:40px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+      margin-top:30px;
     }
   </style>
 </head>
@@ -111,19 +99,19 @@
 
   <div class="main">
 
-    <!-- ホーム：左にカードだけ、右にサイド全部 -->
+    <!-- ホーム（2カラム） -->
     <div id="tab0" class="tab-content active">
       <div class="content">
         <h2>最新のお知らせ</h2>
         <div class="card-grid" id="news-grid"></div>
+
+        <h2 style="margin-top:50px;">今月のすくわくプログラム</h2>
+        <div class="card-grid" id="program-grid"></div>
       </div>
 
       <div class="sidebar">
-        <h3>園の概要</h3>
-        <p>ここに8園の簡単な紹介を入れます</p>
-
-        <h3 style="margin-top:40px;">タグで探す</h3>
-        <div class="tags">
+        <h3>タグで探す</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
           <span class="tag">全園共通</span>
           <span class="tag">0歳児</span>
           <span class="tag">1歳児</span>
@@ -139,18 +127,18 @@
         <div class="insta">
           <h3>Instagramタイムライン</h3>
           <p>各園の日常をチェック！</p>
-          <div style="background:#eee; height:360px; border-radius:8px; margin-top:15px;">
+          <div style="background:#eee;height:320px;border-radius:8px;margin-top:15px;">
             Instagram埋め込み予定
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 他のタブは後で埋める -->
-    <div id="tab1" class="tab-content"><h2>園の概要</h2><p>詳細ページになります</p></div>
-    <div id="tab2" class="tab-content"><h2>地域イベント</h2><p>イベント一覧</p></div>
-    <div id="tab3" class="tab-content"><h2>すくわくプログラム</h2><p>プログラム一覧</p></div>
-    <div id="tab4" class="tab-content"><h2>採用情報</h2><p>採用情報</p></div>
+    <!-- 他のページ（シンプル） -->
+    <div id="tab1" class="tab-content"><h2>園の概要</h2><p>8園の紹介をここに</p></div>
+    <div id="tab2" class="tab-content"><h2>地域イベント</h2><p>今後のイベント情報をここに</p></div>
+    <div id="tab3" class="tab-content"><h2>すくわくプログラム</h2><p>各園の特色ある活動</p></div>
+    <div id="tab4" class="tab-content"><h2>採用情報</h2><p>現在募集中のポジション</p></div>
 
   </div>
 
@@ -160,8 +148,9 @@
       document.getElementById('tab' + n).classList.add('active');
     }
 
+    // サンプルカード
     const sampleCards = [
-      {title:"桜の季節の外遊び", desc:"8園合同で楽しんできました！", img:"https://via.placeholder.com/600x340/4a90e2/ffffff?text=桜"},
+      {title:"桜の季節の外遊び", desc:"8園合同で実施しました！", img:"https://via.placeholder.com/600x340/4a90e2/ffffff?text=桜"},
       {title:"新年度スタート", desc:"みんな元気に通園しています", img:"https://via.placeholder.com/600x340/ff9800/ffffff?text=新年度"}
     ];
 
@@ -179,6 +168,7 @@
     }
 
     document.getElementById('news-grid').append(...sampleCards.map(createCard));
+    document.getElementById('program-grid').append(...sampleCards.map(createCard));
   </script>
 </body>
 </html>
