@@ -30,52 +30,64 @@
       justify-content:center;
       text-align:center;
     }
-    .content-area {
+    .main {
       max-width:1200px;
       margin:30px auto;
       padding:0 20px;
-      min-height:700px;
+      display:flex;
+      gap:30px;
+      flex-wrap:wrap;
+    }
+    .content {
+      flex: 2;
+      min-width: 300px;
+    }
+    .sidebar {
+      flex: 1;
+      min-width: 280px;
     }
 
-    /* カード */
     .card-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-      gap:20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
     .card {
-      background:white;
-      border-radius:12px;
-      overflow:hidden;
-      box-shadow:0 4px 15px rgba(0,0,0,0.1);
-      transition:0.3s;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
     }
-    .card:hover { transform:translateY(-8px); }
+    .card:hover { transform: translateY(-8px); }
     .card img {
-      width:100%;
-      height:180px;
-      object-fit:cover;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
     }
-    .card-body { padding:15px; }
+    .card-body { padding: 15px; }
 
-    /* タグ */
     .tags {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
     }
     .tag {
-      background:#e3f2fd;
-      color:#1976d2;
-      padding:6px 14px;
-      border-radius:20px;
-      font-size:14px;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
     }
-
-    /* タブコンテンツ */
-    .tab-content { display:none; }
-    .tab-content.active { display:block; }
+    .insta-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -97,79 +109,58 @@
     <h1>子どもたちの笑顔を<br>みんなでつなげよう</h1>
   </div>
 
-  <div class="content-area">
+  <div class="main">
 
-    <!-- ==================== ホーム ==================== -->
+    <!-- ==================== ホーム（2カラム） ==================== -->
     <div id="tab0" class="tab-content active">
-      <h2>最新のお知らせ</h2>
-      <div class="card-grid" id="news-grid"></div>
-
-      <h2 style="margin-top:50px;">タグで探す</h2>
-      <div class="tags">
-        <span class="tag">全園共通</span>
-        <span class="tag">0歳児</span>
-        <span class="tag">1歳児</span>
-        <span class="tag">2歳児</span>
-        <span class="tag">3歳児</span>
-        <span class="tag">4歳児</span>
-        <span class="tag">5歳児</span>
-        <span class="tag">食育</span>
-        <span class="tag">行事</span>
-        <span class="tag">保護者向け</span>
+      <div class="content">
+        <h2>最新のお知らせ</h2>
+        <div class="card-grid" id="news-grid"></div>
       </div>
 
-      <h2 style="margin-top:50px;">Instagramタイムライン</h2>
-      <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
-        Instagram埋め込みコードをここに入れてね
+      <div class="sidebar">
+        <h3>タグで探す</h3>
+        <div class="tags">
+          <span class="tag">全園共通</span>
+          <span class="tag">0歳児</span>
+          <span class="tag">1歳児</span>
+          <span class="tag">2歳児</span>
+          <span class="tag">3歳児</span>
+          <span class="tag">4歳児</span>
+          <span class="tag">5歳児</span>
+          <span class="tag">食育</span>
+          <span class="tag">行事</span>
+          <span class="tag">保護者向け</span>
+        </div>
+
+        <div class="insta-box">
+          <h3>Instagramタイムライン</h3>
+          <p>各園の日常をチェック！</p>
+          <div style="background:#eee; height:320px; border-radius:8px; margin-top:15px;">
+            Instagram埋め込み予定
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ==================== 園の概要 ==================== -->
-    <div id="tab1" class="tab-content">
-      <h2>8園の概要</h2>
-      <p>ここに8園の紹介カードを並べます（後で追加）</p>
-    </div>
-
-    <!-- ==================== 地域イベント ==================== -->
-    <div id="tab2" class="tab-content">
-      <h2>地域イベント</h2>
-      <p>今後のイベント情報をここに表示</p>
-    </div>
-
-    <!-- ==================== すくわくプログラム ==================== -->
-    <div id="tab3" class="tab-content">
-      <h2>すくわくプログラム</h2>
-      <p>各園の特色ある活動をここに</p>
-    </div>
-
-    <!-- ==================== 採用情報 ==================== -->
-    <div id="tab4" class="tab-content">
-      <h2>採用情報</h2>
-      <p>現在募集中のポジションなど</p>
-    </div>
+    <!-- 他のタブ（シンプルに切り替え） -->
+    <div id="tab1" class="tab-content"> <h2>園の概要</h2> <p>8園の紹介をここに書きます</p> </div>
+    <div id="tab2" class="tab-content"> <h2>地域イベント</h2> <p>今後のイベント情報をここに</p> </div>
+    <div id="tab3" class="tab-content"> <h2>すくわくプログラム</h2> <p>各園の活動をここに</p> </div>
+    <div id="tab4" class="tab-content"> <h2>採用情報</h2> <p>募集内容をここに</p> </div>
 
   </div>
 
   <script>
     function switchTab(n) {
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-      });
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.getElementById('tab' + n).classList.add('active');
     }
 
-    // サンプルニュースカード
+    // サンプルカード
     const newsCards = [
-      {
-        title: "桜の季節の外遊び",
-        desc: "8園合同でたくさんの笑顔が生まれました！",
-        img: "https://via.placeholder.com/600x340/4a90e2/ffffff?text=桜"
-      },
-      {
-        title: "新年度スタート",
-        desc: "みんな元気に通園しています",
-        img: "https://via.placeholder.com/600x340/ff9800/ffffff?text=新年度"
-      }
+      {title: "桜の季節の外遊び", desc: "8園合同で楽しんできました！", img: "https://via.placeholder.com/600x340/4a90e2/fff?text=桜"},
+      {title: "新年度スタート", desc: "みんな元気に通園しています", img: "https://via.placeholder.com/600x340/ff9800/fff?text=新年度"}
     ];
 
     function renderNews() {
@@ -188,7 +179,6 @@
       });
     }
 
-    // ページ読み込み時にホームのカードを表示
     renderNews();
   </script>
 </body>
