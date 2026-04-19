@@ -3,162 +3,188 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>すくわくネットワーク</title>
+  <title>すくわくネットワーク - 保育園情報共有</title>
   <style>
-    body { margin:0; font-family:sans-serif; background:#f8f9fa; color:#333; }
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
     header {
-      background:#4a90e2;
-      color:white;
-      padding:15px 20px;
-      position:sticky;
-      top:0;
-      z-index:100;
+      background: #4a90e2;
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     nav a {
-      color:white;
-      margin:0 18px;
-      text-decoration:none;
-      font-weight:bold;
-      cursor:pointer;
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
     }
     .hero {
-      height:340px;
-      background: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url('hero.jpg') center/cover no-repeat;
-      color:white;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
+      height: 320px;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('hero-image.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 42px;
+      margin: 0;
     }
     .main {
-      max-width:1200px;
-      margin:30px auto;
-      padding:0 20px;
-      display:flex;
-      gap:30px;
-      flex-wrap:wrap;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
     }
-    .content { flex:2; min-width:300px; }
-    .sidebar { flex:1; min-width:280px; }
-
+    .content {
+      flex: 2;
+    }
+    .sidebar {
+      flex: 1;
+      min-width: 280px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      border-left: 6px solid #4a90e2;
+      padding-left: 15px;
+      font-size: 24px;
+    }
     .card-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-      gap:20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
     .card {
-      background:white;
-      border-radius:12px;
-      overflow:hidden;
-      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
     }
-    .card:hover { transform:translateY(-8px); }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(74,144,226,0.3);
+    }
     .card img {
-      width:100%;
-      height:180px;
-      object-fit:cover;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
     }
-    .card-body { padding:15px; }
-
+    .card-body {
+      padding: 15px;
+    }
     .tag {
-      display:inline-block;
-      background:#e3f2fd;
-      color:#1976d2;
-      padding:6px 14px;
-      border-radius:20px;
-      font-size:13px;
-      margin:4px 4px 4px 0;
+      display: inline-block;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin: 4px 4px 4px 0;
     }
     .insta {
-      background:white;
-      padding:20px;
-      border-radius:12px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.1);
-      margin-top:30px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
+  <!-- ヘッダー -->
   <header>
-    <div style="max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;">
+    <div style="max-width:1200px; margin:auto; display:flex; justify-content:space-between; align-items:center;">
       <h2>すくわくネットワーク</h2>
       <nav>
-        <a onclick="switchTab(0)">ホーム</a>
-        <a onclick="switchTab(1)">園の概要</a>
-        <a onclick="switchTab(2)">地域イベント</a>
-        <a onclick="switchTab(3)">すくわくプログラム</a>
-        <a onclick="switchTab(4)">採用情報</a>
+        <a href="#">園の概要</a>
+        <a href="#">地域イベント</a>
+        <a href="#">すくわくプログラム</a>
+        <a href="#">採用情報</a>
       </nav>
     </div>
   </header>
 
+  <!-- ヒーロー画像 -->
   <div class="hero">
     <h1>子どもたちの笑顔を<br>みんなでつなげよう</h1>
   </div>
 
   <div class="main">
 
-    <!-- ホーム（2カラム） -->
-    <div id="tab0" class="tab-content active">
-      <div class="content">
-        <h2>最新のお知らせ</h2>
-        <div class="card-grid" id="news-grid"></div>
+    <!-- メインコンテンツ -->
+    <div class="content">
 
-        <h2 style="margin-top:50px;">今月のすくわくプログラム</h2>
-        <div class="card-grid" id="program-grid"></div>
+      <div class="section">
+        <h2>最新のお知らせ</h2>
+        <div class="card-grid" id="news-grid">
+          <!-- ここにカードが自動で入る -->
+        </div>
       </div>
 
-      <div class="sidebar">
-        <h3>タグで探す</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <span class="tag">全園共通</span>
-          <span class="tag">0歳児</span>
-          <span class="tag">1歳児</span>
-          <span class="tag">2歳児</span>
-          <span class="tag">3歳児</span>
-          <span class="tag">4歳児</span>
-          <span class="tag">5歳児</span>
-          <span class="tag">行事</span>
-          <span class="tag">食育</span>
-          <span class="tag">保護者向け</span>
+      <div class="section">
+        <h2>今月のすくわくプログラム</h2>
+        <div class="card-grid" id="program-grid">
+          <!-- ここにプログラムカード -->
         </div>
+      </div>
 
-        <div class="insta">
-          <h3>Instagramタイムライン</h3>
-          <p>各園の日常をチェック！</p>
-          <div style="background:#eee;height:320px;border-radius:8px;margin-top:15px;">
-            Instagram埋め込み予定
-          </div>
+    </div>
+
+    <!-- サイドバー（タグ一覧） -->
+    <div class="sidebar">
+      <h3 style="margin-bottom:15px;">タグで探す</h3>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="tag">全園共通</span>
+        <span class="tag">0歳児</span>
+        <span class="tag">1歳児</span>
+        <span class="tag">2歳児</span>
+        <span class="tag">3歳児</span>
+        <span class="tag">4歳児</span>
+        <span class="tag">5歳児</span>
+        <span class="tag">行事</span>
+        <span class="tag">食育</span>
+        <span class="tag">防災</span>
+        <span class="tag">保護者向け</span>
+      </div>
+
+      <!-- Instagram埋め込み -->
+      <div class="insta" style="margin-top:40px;">
+        <h3>Instagramタイムライン</h3>
+        <p>各園の日常をチェック！</p>
+        <!-- ここにInstagram埋め込みコードを入れる -->
+        <div style="background:#eee; height:300px; border-radius:8px; margin-top:15px;">
+          Instagram埋め込み予定
         </div>
       </div>
     </div>
 
-    <!-- 他のページ（シンプル） -->
-    <div id="tab1" class="tab-content"><h2>園の概要</h2><p>8園の紹介をここに</p></div>
-    <div id="tab2" class="tab-content"><h2>地域イベント</h2><p>今後のイベント情報をここに</p></div>
-    <div id="tab3" class="tab-content"><h2>すくわくプログラム</h2><p>各園の特色ある活動</p></div>
-    <div id="tab4" class="tab-content"><h2>採用情報</h2><p>現在募集中のポジション</p></div>
-
   </div>
 
   <script>
-    function switchTab(n) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.getElementById('tab' + n).classList.add('active');
-    }
-
-    // サンプルカード
-    const sampleCards = [
-      {title:"桜の季節の外遊び", desc:"8園合同で実施しました！", img:"https://via.placeholder.com/600x340/4a90e2/ffffff?text=桜"},
-      {title:"新年度スタート", desc:"みんな元気に通園しています", img:"https://via.placeholder.com/600x340/ff9800/ffffff?text=新年度"}
+    // サンプルカード（実際は後で増やしてね）
+    const newsCards = [
+      {title: "桜の季節の外遊び", desc: "8園合同で実施しました！", img: "https://via.placeholder.com/300x180/4a90e2/ffffff?text=桜"},
+      {title: "新年度スタート", desc: "みんな元気に通園しています", img: "https://via.placeholder.com/300x180/ff9800/ffffff?text=新年度"}
     ];
 
     function createCard(card) {
       const div = document.createElement('div');
       div.className = 'card';
       div.innerHTML = `
-        <img src="${card.img}">
+        <img src="${card.img}" alt="${card.title}">
         <div class="card-body">
           <h3>${card.title}</h3>
           <p>${card.desc}</p>
@@ -167,8 +193,9 @@
       return div;
     }
 
-    document.getElementById('news-grid').append(...sampleCards.map(createCard));
-    document.getElementById('program-grid').append(...sampleCards.map(createCard));
+    document.getElementById('news-grid').append(...newsCards.map(createCard));
+    document.getElementById('program-grid').append(...newsCards.map(createCard));
   </script>
+
 </body>
 </html>
