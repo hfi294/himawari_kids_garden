@@ -5,16 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>すくわくネットワーク</title>
   <style>
-    /* 前のコードと同じ綺麗な感じ + 切り替え用 */
-    body { margin:0; font-family:sans-serif; background:#f8f9fa; }
-    header { background:#4a90e2; padding:15px 20px; color:white; position:sticky; top:0; z-index:100; }
-    nav a { color:white; margin:0 18px; text-decoration:none; font-weight:bold; cursor:pointer; }
-    .hero { height:340px; background: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url('hero.jpg') center/cover; color:white; display:flex; align-items:center; justify-content:center; text-align:center; }
-    .content-area { max-width:1200px; margin:30px auto; padding:0 20px; min-height:600px; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px; }
-    .card img { width:100%; height:180px; object-fit:cover; border-radius:8px 8px 0 0; }
+    body { margin:0; font-family:sans-serif; background:#f8f9fa; color:#333; }
+    header {
+      background:#4a90e2;
+      color:white;
+      padding:15px 20px;
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    nav a {
+      color:white;
+      margin:0 18px;
+      text-decoration:none;
+      font-weight:bold;
+      cursor:pointer;
+    }
+    .hero {
+      height:340px;
+      background: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url('hero.jpg') center/cover no-repeat;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+    .content-area {
+      max-width:1200px;
+      margin:30px auto;
+      padding:0 20px;
+      min-height:700px;
+    }
+
+    /* カード */
+    .card-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+      gap:20px;
+    }
+    .card {
+      background:white;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+      transition:0.3s;
+    }
+    .card:hover { transform:translateY(-8px); }
+    .card img {
+      width:100%;
+      height:180px;
+      object-fit:cover;
+    }
+    .card-body { padding:15px; }
+
+    /* タグ */
+    .tags {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:20px 0;
+    }
+    .tag {
+      background:#e3f2fd;
+      color:#1976d2;
+      padding:6px 14px;
+      border-radius:20px;
+      font-size:14px;
+    }
+
+    /* タブコンテンツ */
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
   </style>
 </head>
 <body>
@@ -38,41 +99,87 @@
 
   <div class="content-area">
 
-    <!-- ホーム -->
+    <!-- ==================== ホーム ==================== -->
     <div id="tab0" class="tab-content active">
       <h2>最新のお知らせ</h2>
-      <div class="card-grid" id="home-cards"></div>
+      <div class="card-grid" id="news-grid"></div>
+
+      <h2 style="margin-top:50px;">タグで探す</h2>
+      <div class="tags">
+        <span class="tag">全園共通</span>
+        <span class="tag">0歳児</span>
+        <span class="tag">1歳児</span>
+        <span class="tag">2歳児</span>
+        <span class="tag">3歳児</span>
+        <span class="tag">4歳児</span>
+        <span class="tag">5歳児</span>
+        <span class="tag">食育</span>
+        <span class="tag">行事</span>
+        <span class="tag">保護者向け</span>
+      </div>
+
+      <h2 style="margin-top:50px;">Instagramタイムライン</h2>
+      <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+        Instagram埋め込みコードをここに入れてね
+      </div>
     </div>
 
-    <!-- 園の概要 -->
+    <!-- ==================== 園の概要 ==================== -->
     <div id="tab1" class="tab-content">
-      <h2>8園の紹介</h2>
-      <p>ここに8園のカードを並べるよ</p>
+      <h2>8園の概要</h2>
+      <p>ここに8園の紹介カードを並べます（後で追加）</p>
     </div>
 
-    <!-- 他のタブも後で追加 -->
+    <!-- ==================== 地域イベント ==================== -->
+    <div id="tab2" class="tab-content">
+      <h2>地域イベント</h2>
+      <p>今後のイベント情報をここに表示</p>
+    </div>
+
+    <!-- ==================== すくわくプログラム ==================== -->
+    <div id="tab3" class="tab-content">
+      <h2>すくわくプログラム</h2>
+      <p>各園の特色ある活動をここに</p>
+    </div>
+
+    <!-- ==================== 採用情報 ==================== -->
+    <div id="tab4" class="tab-content">
+      <h2>採用情報</h2>
+      <p>現在募集中のポジションなど</p>
+    </div>
 
   </div>
 
   <script>
     function switchTab(n) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
       document.getElementById('tab' + n).classList.add('active');
     }
 
-    // サンプルカード
-    const sampleCards = [
-      {title:"桜の外遊び", desc:"全園合同で楽しんできました！", img:"https://via.placeholder.com/600x340/4a90e2/fff?text=桜"},
+    // サンプルニュースカード
+    const newsCards = [
+      {
+        title: "桜の季節の外遊び",
+        desc: "8園合同でたくさんの笑顔が生まれました！",
+        img: "https://via.placeholder.com/600x340/4a90e2/ffffff?text=桜"
+      },
+      {
+        title: "新年度スタート",
+        desc: "みんな元気に通園しています",
+        img: "https://via.placeholder.com/600x340/ff9800/ffffff?text=新年度"
+      }
     ];
 
-    function renderCards() {
-      const container = document.getElementById('home-cards');
-      sampleCards.forEach(card => {
+    function renderNews() {
+      const container = document.getElementById('news-grid');
+      newsCards.forEach(card => {
         const div = document.createElement('div');
         div.className = 'card';
         div.innerHTML = `
           <img src="${card.img}">
-          <div style="padding:15px;">
+          <div class="card-body">
             <h3>${card.title}</h3>
             <p>${card.desc}</p>
           </div>
@@ -81,7 +188,8 @@
       });
     }
 
-    renderCards();
+    // ページ読み込み時にホームのカードを表示
+    renderNews();
   </script>
 </body>
 </html>
