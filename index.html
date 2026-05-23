@@ -3,385 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>すくわくネットワーク ポータル</title>
+<title>ひまわりキッズガーデン ポータル</title>
 <style>
-/* --- 最初の洗練された基本スタイル --- */
+/* --- 基本デザイン（ひまわりカラー＆北欧風） --- */
 body {
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
   background-color: #fcfaf2;
   color: #4a433c;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+  margin: 0; padding: 0; line-height: 1.6;
 }
 
-/* --- 📁 【完全復元】法人ロゴ＆HPリンク付き最上部ヘッダー --- */
-header {
-  background-color: transparent; /* 最初の透明感ある空気感を維持 */
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 20px;
+/* --- 📁 【一番上】法人ヘッダー：左ロゴ・右ナビ --- */
+.site-header {
+  background-color: white;
+  border-bottom: 2px solid #f0e1bc;
+  padding: 15px 40px;
   display: flex;
-  justify-content: space-between; /* 左にロゴ、右にHPリンクの黄金比！ */
+  justify-content: space-between;
   align-items: center;
 }
 .logo-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: #4a433c;
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: #5d4037; font-weight: bold; font-size: 20px;
 }
-.logo-mark {
-  background-color: #d8a35d;
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 18px;
-}
-.logo-text {
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-.corporate-nav {
-  display: flex;
-  gap: 20px;
-}
-.corporate-link {
-  color: #7b5b35;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: bold;
-  transition: color 0.2s;
-}
-.corporate-link:hover {
-  color: #d8a35d;
-}
+.logo-mark { color: #ffb300; font-size: 28px; }
 
-/* --- 📁 ヒーローの下に配置されたスマートなカテゴリメニュー（すべて表示は廃止！） --- */
-.category-section {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 10px 20px 0 20px;
+.header-nav { display: flex; gap: 20px; }
+.header-link {
+  color: #7b5b35; text-decoration: none; font-size: 14px; font-weight: bold;
 }
-.category-nav {
+.header-link:hover { color: #d8a35d; }
+
+/* --- 📁 【真ん中】メインメニュー（タブ形式） --- */
+.tab-section {
+  background-color: #fffdf9;
+  padding: 20px 0;
   display: flex;
+  justify-content: center;
   gap: 12px;
+  border-bottom: 1px solid #e8dfd2;
 }
-.category-btn {
-  background-color: transparent;
-  color: #7b5b35;
-  border: 1px solid #e8dfd2;
-  padding: 8px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.tab-btn {
+  background-color: #efe5d5; color: #7b5b35; border: none;
+  padding: 10px 24px; font-size: 15px; font-weight: bold;
+  border-radius: 999px; cursor: pointer; transition: 0.25s;
 }
-.category-btn:hover {
-  background-color: #f4f0e6;
-  border-color: #d8a35d;
-}
-.category-btn.active {
-  background-color: #d8a35d;
-  color: white;
-  border-color: #d8a35d;
+.tab-btn:hover { background-color: #e4d5be; }
+.tab-btn.active {
+  background-color: #f57c00; color: white; box-shadow: 0 4px 12px rgba(245,124,0,0.3);
 }
 
-/* --- 🌟 ヒーローイメージ --- */
-.hero-section {
-  position: relative;
-  width: 100%;
-  height: 380px;
-  background: #efe5d5 url('images/hero.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-}
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(74, 67, 60, 0.35);
-}
-.hero-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  color: white;
-  padding: 0 20px;
-}
-.hero-content h1 {
-  margin: 0;
-  font-size: 34px;
-  font-weight: bold;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
-  letter-spacing: 2px;
-}
-.hero-content p {
-  margin: 15px 0 0 0;
-  font-size: 15px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-/* --- 📦 2カラムレイアウト（左メイン：右タグサイドバー） --- */
+/* --- 📦 2カラムレイアウト --- */
 .container {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-.main-layout {
-  display: flex;
-  gap: 40px;
+  max-width: 1300px; margin: 0 auto; padding: 40px 20px;
+  display: flex; gap: 40px;
 }
 
-/* --- 🖼️ 【左側】フォトカードグリッド --- */
-.content-area {
-  flex-grow: 1;
-}
+/* --- 🖼️ 【左側】メインコンテンツ（1カラムタブの内容） --- */
+.main-content { flex-grow: 1; }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 30px;
 }
+/* カード等のスタイル（中身はJSONから召喚） */
 .card {
-  background-color: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.02);
-  border: 1px solid #e8dfd2;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  display: flex;
-  flex-direction: column;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 28px rgba(216,163,93,0.1);
-}
-.card-img-wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 65%;
-  background-color: #efe5d5;
-}
-.card-img {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  object-fit: cover;
-}
-.card-content {
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-.card-title {
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  color: #4a433c;
-  font-weight: bold;
-}
-.card-desc {
-  margin: 0 0 18px 0;
-  font-size: 13.5px;
-  color: #746b63;
-  flex-grow: 1;
-}
-.card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: auto;
-}
-.card-hash-tag {
-  font-size: 11px;
-  color: #bf8740;
-  background-color: rgba(216,163,93,0.05);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-}
-.no-data {
-  text-align: center;
-  padding: 40px 20px;
-  color: #8f6b3d;
-  font-size: 15px;
+  background: white; border-radius: 20px; overflow: hidden;
+  border: 1px solid #e8dfd2; display: flex; flex-direction: column;
 }
 
-/* --- 🔍 【右側】おにーちゃん指定：タグ絞り込みサイドバー --- */
-.sidebar {
-  width: 280px;
-  flex-shrink: 0;
+/* --- 🔍 【右側】おにーちゃん指定のサイドバー基地 --- */
+.sidebar { width: 300px; flex-shrink: 0; }
+.sidebar-sticky { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 30px; }
+
+/* ウィジェット共通 */
+.widget {
+  background: white; border: 1px solid #e8dfd2; border-radius: 16px; padding: 20px;
 }
-.sidebar-sticky {
-  position: sticky;
-  top: 30px;
+.widget-title {
+  font-size: 14px; color: #8f6b3d; margin: 0 0 15px 0; border-bottom: 1px solid #f0e1bc; padding-bottom: 8px;
 }
-.tag-block {
-  background: white;
-  border: 1px solid #e8dfd2;
-  border-radius: 16px;
-  padding: 22px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.01);
-}
-.tag-block h2 {
-  font-size: 14px;
-  color: #8f6b3d;
-  margin-top: 0;
-  margin-bottom: 15px;
-  letter-spacing: 1px;
-}
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+
+/* タグリスト */
+.tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag-btn {
-  background-color: #f4f0e6;
-  color: #6b6258;
-  border: 1px solid #e8dfd2;
-  padding: 6px 12px;
-  font-size: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
+  background: #f4f0e6; color: #6b6258; border: 1px solid #e8dfd2;
+  padding: 5px 12px; font-size: 12px; border-radius: 8px; cursor: pointer;
 }
-.tag-btn:hover {
-  background-color: #ebdcb9;
-  border-color: #d8a35d;
-  color: #7b5b35;
-}
-.tag-btn.active {
-  background-color: #7b5b35;
-  border-color: #7b5b35;
-  color: white;
+.tag-btn.active { background: #7b5b35; color: white; border-color: #7b5b35; }
+
+/* SNSタイムライン枠 */
+.sns-placeholder {
+  height: 200px; background: #fafafa; border: 1px dashed #ccc;
+  display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px;
 }
 
-/* --- スマホ対応 --- */
+/* Twitterバナー風 */
+.twitter-banner {
+  background: linear-gradient(135deg, #1da1f2, #0c85d0);
+  color: white; padding: 15px; border-radius: 12px; text-align: center;
+  text-decoration: none; font-weight: bold; font-size: 14px; display: block;
+}
+
+/* スマホ対応 */
 @media (max-width: 900px) {
-  header {
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px;
-  }
-  .category-section {
-    padding: 0 15px;
-  }
-  .category-nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-  }
-  .category-btn {
-    padding: 6px 14px;
-    font-size: 12px;
-  }
-  .hero-section {
-    height: 240px;
-  }
-  .hero-content h1 {
-    font-size: 24px;
-  }
-  .main-layout {
-    flex-direction: column-reverse;
-  }
-  .sidebar {
-    width: 100%;
-  }
-  .sidebar-sticky {
-    position: static;
-  }
+  .site-header { flex-direction: column; gap: 15px; }
+  .container { flex-direction: column; }
+  .sidebar { width: 100%; }
 }
 </style>
 </head>
 <body>
 
-<!-- 📁 【最上部】おにーちゃんの記憶通り！ロゴ＆法人リンクのオフィシャルヘッダー -->
-<header>
+<header class="site-header">
   <a href="#" class="logo-area">
-    <div class="logo-mark">🌱</div>
-    <span class="logo-text">すくわくネットワーク</span>
+    <span class="logo-mark">🌻</span> ひまわりキッズガーデン
   </a>
-  <nav class="corporate-nav">
-    <a href="https://example.com/corporate" class="corporate-link" target="_blank">法人HP ↗</a>
-    <a href="https://example.com/contact" class="corporate-link" target="_blank">お問い合わせ ↗</a>
+  <nav class="header-nav">
+    <a href="#" class="header-link">園について</a>
+    <a href="#" class="header-link">すくわくプログラム</a>
+    <a href="https://example.com" class="header-link" target="_blank">法人HP ↗</a>
+    <a href="#" class="header-link">お問い合わせ ↗</a>
   </nav>
 </header>
 
-<!-- 📁 カテゴリ選択エリア（「すべて表示」を撤廃してスマートに！） -->
-<div class="category-section">
-  <nav class="category-nav">
-    <!-- 最初のカテゴリ「最新のお知らせ」をデフォルトで選択状態にするよ！ -->
-    <button class="category-btn active" data-category="news">最新のお知らせ</button>
-    <button class="category-btn" data-category="event">地域イベント</button>
-    <button class="category-btn" data-category="program">すくわくプログラム</button>
-  </nav>
-</div>
+<nav class="tab-section">
+  <button class="tab-btn active" data-category="about">園について</button>
+  <button class="tab-btn" data-category="program">すくわくプログラム</button>
+  <button class="tab-btn" data-category="news">最新のお知らせ</button>
+  <button class="tab-btn" data-category="event">地域イベント</button>
+</nav>
 
-<!-- 🌟 美しいヒーローセクション -->
-<div class="hero-section">
-  <div class="hero-content">
-    <h1>🌱 すくわくネットワーク ポータル</h1>
-    <p>子どもたちの笑顔あふれる日常と、ワクワクするプログラムを配信中！</p>
-  </div>
-</div>
-
-<!-- 📦 2カラム（左メイン写真 / 右タグサイドバー） -->
 <div class="container">
-  <div class="main-layout">
-    
-    <!-- 🖼️ 左側：メインカード表示エリア -->
-    <main class="content-area">
-      <div class="grid" id="photo-grid">
-        <!-- ここにおにーちゃんのデータが並ぶよ！ -->
+  <main class="main-content">
+    <div id="content-display">
       </div>
-    </main>
+  </main>
 
-    <!-- 🔍 右側：タグフィルターサイドバー -->
-    <aside class="sidebar">
-      <div class="sidebar-sticky">
-        <div class="tag-block" id="tag-filter-block" style="display: none;">
-          <h2>🔍 タグでさらに絞り込む</h2>
-          <div class="tag-list" id="tag-list"></div>
-        </div>
+  <aside class="sidebar">
+    <div class="sidebar-sticky">
+      <div class="widget">
+        <h2 class="widget-title">🔍 タグで絞り込む</h2>
+        <div class="tag-list" id="tag-list"></div>
       </div>
-    </aside>
+      
+      <div class="widget">
+        <h2 class="widget-title">TikTok</h2>
+        <div class="sns-placeholder">TikTokの埋め込みがここに入るよ！</div>
+      </div>
 
-  </div>
+      <div class="widget">
+        <h2 class="widget-title">Instagram</h2>
+        <div class="sns-placeholder">Instagramのタイムラインがここに入るよ！</div>
+      </div>
+
+      <a href="#" class="twitter-banner">
+        X (Twitter) で最新情報をチェック！
+      </a>
+    </div>
+  </aside>
 </div>
 
 <script>
-// ※デフォルトのカテゴリを「news」にセットするよ！
+// おにーちゃん！ここからのJSは、これまでのJSON読み込みロジックを
+// 新しいタブ形式に合わせてあやねが調整したものだよ！
 let allData = [];
-let currentCat = 'news'; 
+let currentCat = 'about'; // 最初は「園について」
 let currentTag = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   fetch('data.json')
-    .then(response => {
-      if (!response.ok) throw new Error('data.json が読み込めないよ💦');
-      return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
       allData = data;
       renderPage();
     })
-    .catch(error => {
-      console.error(error);
-      document.getElementById('photo-grid').innerHTML = `<div class="no-data">データの読み込みに失敗しちゃった……配置を確認してみてね、おにーちゃん！😭</div>`;
+    .catch(err => {
+      console.error(err);
+      document.getElementById('content-display').innerHTML = "データを読み込めなかったよ💦";
     });
 
-  document.querySelectorAll('.category-btn').forEach(btn => {
+  // タブのクリックイベント
+  document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       e.target.classList.add('active');
       currentCat = e.target.getAttribute('data-category');
       currentTag = ''; 
@@ -391,84 +197,73 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function renderPage() {
+  const display = document.getElementById('content-display');
+  
+  // 「園について」など、固定の紹介文を入れたい場合の処理
+  if (currentCat === 'about') {
+    display.innerHTML = `
+      <div style="background:white; padding:30px; border-radius:20px; border:1px solid #e8dfd2;">
+        <h2 style="color:#5d4037;">ひまわりキッズガーデンへようこそ！</h2>
+        <p>ここでは園の教育方針や、日々の生活についてご紹介します。</p>
+        <img src="images/hero.jpg" style="width:100%; border-radius:15px; margin-top:15px;">
+      </div>
+    `;
+    updateTagArea([]); // 園についてタブではタグなし
+    return;
+  }
+
+  // それ以外のタブ（JSONからカード形式で出す）
+  display.innerHTML = '<div class="grid" id="photo-grid"></div>';
   const grid = document.getElementById('photo-grid');
-  grid.innerHTML = '';
 
-  // 選択されたカテゴリだけでバシッとフィルタリング！
-  let filtered = allData.filter(item => {
-    if (currentCat === 'news' && item.category === 'program') return true;
-    return item.category === currentCat;
-  });
-
-  updateTagFilterArea(filtered);
+  let filtered = allData.filter(item => item.category === currentCat);
+  updateTagArea(filtered);
 
   if (currentTag) {
     filtered = filtered.filter(item => item.tags && item.tags.includes(currentTag));
   }
 
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="no-data">該当するお写真はまだありません📷</div>';
+    grid.innerHTML = '<div class="no-data">まだ投稿がありません📷</div>';
     return;
   }
 
   filtered.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
-    let tagsHtml = '';
-    if (item.tags && item.tags.length > 0) {
-      tagsHtml = item.tags.map(t => `<span class="card-hash-tag">#${t}</span>`).join('');
-    }
-
     card.innerHTML = `
-      <div class="card-img-wrapper">
-        <img src="${item.img}" class="card-img" alt="${item.title}" loading="lazy">
+      <div style="position:relative; padding-top:65%; background:#efe5d5;">
+        <img src="${item.img}" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
       </div>
-      <div class="card-content">
-        <h2 class="card-title">${item.title}</h2>
-        <p class="card-desc">${item.desc}</p>
-        <div class="card-tags">${tagsHtml}</div>
+      <div style="padding:20px;">
+        <h3 style="margin:0 0 10px 0; font-size:17px;">${item.title}</h3>
+        <p style="font-size:13px; color:#746b63;">${item.desc}</p>
       </div>
     `;
     grid.appendChild(card);
   });
 }
 
-function updateTagFilterArea(currentData) {
-  const filterBlock = document.getElementById('tag-filter-block');
-  const tagListContainer = document.getElementById('tag-list');
+function updateTagArea(data) {
+  const tagList = document.getElementById('tag-list');
   const tagSet = new Set();
-  
-  currentData.forEach(item => {
-    if (item.tags) item.tags.forEach(t => tagSet.add(t));
-  });
+  data.forEach(item => item.tags && item.tags.forEach(t => tagSet.add(t)));
 
   if (tagSet.size === 0) {
-    filterBlock.style.display = 'none';
-    currentTag = '';
+    tagList.innerHTML = '<p style="font-size:12px; color:#999;">タグはありません</p>';
     return;
   }
 
-  filterBlock.style.display = 'block';
-  tagListContainer.innerHTML = '';
-
-  const allTagBtn = document.createElement('button');
-  allTagBtn.className = `tag-btn ${currentTag === '' ? 'active' : ''}`;
-  allTagBtn.textContent = 'すべて解除';
-  allTagBtn.addEventListener('click', () => {
-    currentTag = '';
-    renderPage();
-  });
-  tagListContainer.appendChild(allTagBtn);
-
+  tagList.innerHTML = '';
   tagSet.forEach(tagName => {
     const btn = document.createElement('button');
     btn.className = `tag-btn ${currentTag === tagName ? 'active' : ''}`;
     btn.textContent = `#${tagName}`;
-    btn.addEventListener('click', () => {
+    btn.onclick = () => {
       currentTag = (currentTag === tagName) ? '' : tagName;
       renderPage();
-    });
-    tagListContainer.appendChild(btn);
+    };
+    tagList.appendChild(btn);
   });
 }
 </script>
