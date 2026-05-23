@@ -13,15 +13,20 @@ body {
   margin: 0; padding: 0; line-height: 1.6;
 }
 
-/* --- 📁 【1. トップバー】ロゴもメニューもまとめて【中央寄せ】で見やすく！ --- */
+/* --- 📁 【1. トップバー】1200pxの枠の中で、ロゴ左端・メニュー右寄せ！ --- */
 .site-header {
   background-color: white;
   border-bottom: 2px solid #f0e1bc;
-  padding: 15px 20px;
+  /* 横に広がりすぎないように、ヘッダー自体にパディングをあてるよ */
+  padding: 0 20px; 
+}
+.header-container {
+  max-width: 1200px; /* ✨ おにーちゃん指定の1000ちょっと（1200px）に制限！ */
+  margin: 0 auto; /* ✨ これで画面の中央に配置されるよ */
+  height: 70px;
   display: flex;
-  justify-content: center; /* ✨ 中央にギュッと集めるよ！ */
+  justify-content: space-between; /* ✨ ロゴを左端、メニューを右寄せに引き離す魔法！ */
   align-items: center;
-  gap: 50px; /* ロゴとメニューの間の心地いいディスタンス💕 */
 }
 .logo-area {
   display: flex; align-items: center; gap: 10px;
@@ -71,7 +76,8 @@ body {
 
 /* --- 📦 【4. 2カラムメインコンテナ】 --- */
 .container {
-  max-width: 1300px; margin: 0 auto; padding: 40px 20px;
+  max-width: 1200px; /* ✨ ヘッダーの幅とピシッと揃うように1200pxに統一！ */
+  margin: 0 auto; padding: 40px 20px;
   display: flex; gap: 40px;
 }
 
@@ -148,7 +154,8 @@ body {
 
 /* スマホ対応 */
 @media (max-width: 900px) {
-  .site-header { flex-direction: column; padding: 15px; gap: 15px; }
+  .site-header { padding: 15px; }
+  .header-container { flex-direction: column; height: auto; gap: 15px; }
   .top-nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
   .container { flex-direction: column; }
   .sidebar { width: 100%; }
@@ -158,16 +165,18 @@ body {
 <body>
 
 <header class="site-header">
-  <a href="#" class="logo-area">
-    <span class="logo-mark">🌻</span> ひまわりキッズガーデン
-  </a>
-  <nav class="top-nav">
-    <div class="top-nav-item active" data-tab="top" onclick="switchTopNav('top')">TOP</div>
-    <div class="top-nav-item" data-tab="about" onclick="switchTopNav('about')">園について</div>
-    <div class="top-nav-item" data-tab="program" onclick="switchTopNav('program')">すくわくプログラム</div>
-    <a href="https://example.com" class="top-nav-item" target="_blank">法人HP ↗</a>
-    <a href="#" class="top-nav-item">お問い合わせ ↗</a>
-  </nav>
+  <div class="header-container">
+    <a href="#" class="logo-area">
+      <span class="logo-mark">🌻</span> ひまわりキッズガーデン
+    </a>
+    <nav class="top-nav">
+      <div class="top-nav-item active" data-tab="top" onclick="switchTopNav('top')">TOP</div>
+      <div class="top-nav-item" data-tab="about" onclick="switchTopNav('about')">園について</div>
+      <div class="top-nav-item" data-tab="program" onclick="switchTopNav('program')">すくわくプログラム</div>
+      <a href="https://example.com" class="top-nav-item" target="_blank">法人HP ↗</a>
+      <a href="#" class="top-nav-item">お問い合わせ ↗</a>
+    </nav>
+  </div>
 </header>
 
 <div class="hero-section">
@@ -246,18 +255,18 @@ function switchTopNav(targetMode) {
 
   const display = document.getElementById('main-content-area');
   const middleBar = document.getElementById('middle-menu-bar');
-  const tagWidget = document.getElementById('tag-filter-widget'); // ✨ タグの枠を取得！
+  const tagWidget = document.getElementById('tag-filter-widget');
 
   if (targetMode === 'top') {
     middleBar.style.display = 'flex'; 
-    tagWidget.style.display = 'block'; // ✨ TOPの時はタグ一覧を復活させる！
+    tagWidget.style.display = 'block'; 
     currentMiddleCat = 'all'; 
     resetMiddleTabActive();
     renderDataGrid(); 
   } 
   else {
     middleBar.style.display = 'none'; 
-    tagWidget.style.display = 'none'; // ✨ 園について・すくわくの時はタグ一覧を【非表示】！！
+    tagWidget.style.display = 'none'; 
     
     if (targetMode === 'about') {
       display.innerHTML = `
@@ -270,7 +279,7 @@ function switchTopNav(targetMode) {
       display.innerHTML = `
         <div class="info-box">
           <h2>✨ すくわくプログラム</h2>
-          <p>子どもたちが五感をフルに使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでしていきます。</p>
+          <p>子どもたちが五感をフルに使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでいきます。</p>
           <p style="margin-top: 15px;">季節ごとのプログラムや、外部講師を招いた楽しいイベントも盛りだくさんですッ！</p>
         </div>`;
     }
@@ -314,7 +323,6 @@ function renderDataGrid() {
     filtered = allData.filter(d => d && d.category === currentMiddleCat);
   }
 
-  // タグリストの更新（TOPの時だけ意味があるよ）
   updateSidebarTags(filtered);
 
   if (currentTagName) {
