@@ -3,275 +3,360 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>すくわくネットワーク</title>
-
+<title>すくわくネットワーク ポータル</title>
 <style>
+/* --- 全体の基本デザイン（保育園らしい温かみのあるカラー） --- */
 body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  background-color: #fcfaf2;
+  color: #4a433c;
   margin: 0;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: #f8f9fa;
-  color: #333;
+  padding: 0;
+  line-height: 1.6;
 }
-
 header {
-  background: #4a90e2;
-  color: white;
-  padding: 15px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  background: linear-gradient(135deg, #f9f3e6 0%, #f3e9d4 100%);
+  padding: 40px 20px;
+  text-align: center;
+  border-bottom: 4px solid #d8a35d;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #7b5b35;
+  letter-spacing: 1px;
+}
+header p {
+  margin: 10px 0 0 0;
+  font-size: 14px;
+  color: #8f6b3d;
 }
 
-nav a {
-  color: white;
-  margin: 0 12px;
-  text-decoration: none;
+/* --- メインコンテナ --- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* --- カテゴリ切り替え（メインのタブナビゲーション） --- */
+.category-nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+.category-btn {
+  background-color: #efe5d5;
+  color: #7b5b35;
+  border: none;
+  padding: 10px 24px;
+  font-size: 15px;
   font-weight: bold;
-  transition: 0.3s;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.category-btn:hover {
+  background-color: #e4d5be;
+}
+.category-btn.active {
+  background-color: #d8a35d;
+  color: white;
+  box-shadow: 0 4px 12px rgba(216,163,93,0.3);
 }
 
-nav a:hover {
-  opacity: 0.7;
+/* --- 【超重要】動的タグフィルターエリア --- */
+.tag-filter-container {
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 16px;
+  margin-bottom: 35px;
+  border: 1px solid #e8dfd2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.01);
 }
-
-nav a.active {
-  border-bottom: 2px solid white;
-}
-
-.hero {
-  height: 320px;
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-              url('https://via.placeholder.com/1200x320') center/cover no-repeat;
+.tag-filter-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #8f6b3d;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
+  gap: 5px;
 }
-
-.hero h1 {
-  font-size: 42px;
-  margin: 0;
-}
-
-.main {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
-
-.home-layout {
+.tag-list {
   display: flex;
-  gap: 30px;
   flex-wrap: wrap;
+  gap: 8px;
 }
-
-.content {
-  flex: 2;
+.tag-btn {
+  background-color: #f4f0e6;
+  color: #6b6258;
+  border: 1px solid #e8dfd2;
+  padding: 5px 14px;
+  font-size: 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-
-.sidebar {
-  flex: 1;
-  min-width: 280px;
+.tag-btn:hover {
+  background-color: #ebdcb9;
+  border-color: #d8a35d;
+  color: #7b5b35;
 }
-
-.single-layout {
-  max-width: 800px;
-  margin: auto;
-}
-
-.section {
-  margin-bottom: 40px;
-}
-
-.section h2 {
-  border-left: 6px solid #4a90e2;
-  padding-left: 15px;
-}
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-/* 👇 カードホバー */
-.card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 30px rgba(74,144,226,0.3);
-}
-
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  transition: 0.3s;
-}
-
-/* 👇 画像ちょいズーム */
-.card:hover img {
-  transform: scale(1.05);
-}
-
-.card-body {
-  padding: 15px;
-}
-
-.tag {
-  display: inline-block;
-  background: #e3f2fd;
-  color: #1976d2;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  transition: 0.2s;
-}
-
-/* 👇 タグホバー */
-.tag:hover {
-  background: #4a90e2;
+.tag-btn.active {
+  background-color: #7b5b35;
+  border-color: #7b5b35;
   color: white;
-  transform: translateY(-2px);
 }
 
-.insta {
-  background: white;
+/* --- フォトカードグリッド --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+.card {
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+  border: 1px solid #e8dfd2;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(216,163,93,0.15);
+}
+
+/* カード画像部分 */
+.card-img-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 65%; /* 16:10の黄金比率で統一して美しく見せる */
+  background-color: #efe5d5;
+}
+.card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* カードテキスト部分 */
+.card-content {
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.card-title {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #4a433c;
+  font-weight: bold;
+}
+.card-desc {
+  margin: 0 0 15px 0;
+  font-size: 13px;
+  color: #746b63;
+  flex-grow: 1;
 }
 
-/* 👇 サイドカードも浮かす */
-.insta:hover {
-  transform: translateY(-5px);
+/* カード内ハッシュタグ */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+.card-hash-tag {
+  font-size: 11px;
+  color: #bf8740;
+  background-color: rgba(216,163,93,0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
+/* 該当データがないとき */
+.no-data {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #8f6b3d;
+  font-size: 15px;
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div style="max-width:1200px; margin:auto; display:flex; justify-content:space-between; align-items:center;">
-    <h2>すくわくネットワーク</h2>
-    <nav>
-      <a href="#" data-tab="home" class="active">ホーム</a>
-      <a href="#" data-tab="event">地域イベント</a>
-      <a href="#" data-tab="program">すくわくプログラム</a>
-      <a href="https://himawari-fukushikai.org/" target="_blank">法人HP</a>
-      <a href="https://recruit.jobcan.jp/himawari-fukushikai/" target="_blank">採用情報</a>
-    </nav>
-  </div>
+  <h1>🌱 すくわくネットワーク ポータル</h1>
+  <p>保育園の日常、楽しいプログラムやイベントの様子をお届けします♪</p>
 </header>
 
-<div class="hero">
-  <h1>子どもたちの未来をつなぐ</h1>
-</div>
+<div class="container">
+  <!-- カテゴリ切り替えタブ -->
+  <nav class="category-nav">
+    <button class="category-btn active" data-category="all">すべて</button>
+    <button class="category-btn" data-category="news">最新のお知らせ</button>
+    <button class="category-btn" data-category="event">地域イベント</button>
+    <button class="category-btn" data-category="program">すくわくプログラム</button>
+  </nav>
 
-<div class="main">
-
-  <div class="tab-content active" id="home">
-    <div class="home-layout">
-
-      <div class="content">
-        <div class="section">
-          <h2>最新のお知らせ</h2>
-          <div class="card-grid" id="news-grid"></div>
-        </div>
-
-        <div class="section">
-          <h2>今月のすくわくプログラム</h2>
-          <div class="card-grid" id="program-grid"></div>
-        </div>
-      </div>
-
-      <div class="sidebar">
-        <h3>タグ</h3>
-        <span class="tag">0歳</span>
-        <span class="tag">1歳</span>
-        <span class="tag">行事</span>
-
-        <div class="insta" style="margin-top:30px;">
-          Instagram
-        </div>
-      </div>
-
+  <!-- 動的ハッシュタグフィルター（JSで自動生成） -->
+  <div class="tag-filter-container" id="tag-filter-block" style="display: none;">
+    <div class="tag-filter-title">🔍 タグでさらに絞り込む：</div>
+    <div class="tag-list" id="tag-list">
+      <!-- ここに登録されているタグのボタンがズラッと並ぶよ！ -->
     </div>
   </div>
 
-  <div class="tab-content" id="event">
-    <div class="single-layout">
-      <div class="section">
-        <h2>地域イベント</h2>
-        <div class="card">親子ふれあいデー開催予定！</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-content" id="program">
-    <div class="single-layout">
-      <div class="section">
-        <h2>すくわくプログラム詳細</h2>
-        <div class="card">リズム遊び・制作活動など</div>
-      </div>
-    </div>
-  </div>
-
+  <!-- フォトカードが並ぶグリッド -->
+  <main class="grid" id="photo-grid">
+    <!-- JSでここにカードが召喚されるッ！ -->
+  </main>
 </div>
 
 <script>
-const tabs = document.querySelectorAll('nav a[data-tab]');
-const contents = document.querySelectorAll('.tab-content');
+let allData = [];       // JSONから読み込んだ全データを保持
+let currentCat = 'all'; // 現在選択されているカテゴリ
+let currentTag = '';   // 現在選択されている絞り込みタグ
 
-tabs.forEach(tab => {
-  tab.addEventListener('click', e => {
-    e.preventDefault();
+// ページが読み込まれたら即座にJSONを取りに行く！
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('data.json')
+    .then(response => {
+      if (!response.ok) throw new Error('data.json が見つからないか読み込めないよ💦');
+      return response.json();
+    })
+    .then(data => {
+      allData = data;
+      renderPage(); // 画面を描画！
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById('photo-grid').innerHTML = `<div class="no-data">データ（data.json）の読み込みに失敗しちゃったみたい……おにーちゃん確認してみてッ！😭</div>`;
+    });
 
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    const target = tab.dataset.tab;
-    contents.forEach(c => c.classList.remove('active'));
-    document.getElementById(target).classList.add('active');
+  // カテゴリタブのクリックイベント登録
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      
+      currentCat = e.target.getAttribute('data-category');
+      currentTag = ''; // カテゴリが変わったら、タグの絞り込みは一度リセット
+      renderPage();
+    });
   });
 });
 
-const newsCards = [
-  {title: "桜の季節の外遊び", desc: "8園合同で実施！", img: "https://via.placeholder.com/300x180/4a90e2/ffffff"},
-  {title: "新年度スタート", desc: "元気に通園中", img: "https://via.placeholder.com/300x180/ff9800/ffffff"}
-];
+// 画面全体の描画をコントロールするメイン関数
+function renderPage() {
+  const grid = document.getElementById('photo-grid');
+  grid.innerHTML = ''; // 一度リセット
 
-function createCard(card) {
-  const div = document.createElement('div');
-  div.className = 'card';
-  div.innerHTML = `
-    <img src="${card.img}">
-    <div class="card-body">
-      <h3>${card.title}</h3>
-      <p>${card.desc}</p>
-    </div>
-  `;
-  return div;
+  // 1. まず現在のカテゴリでデータをフィルタリング
+  let filtered = allData.filter(item => {
+    if (currentCat === 'all') return true;
+    // 「program」はホーム（news）にも表示させたいという仕様に対応！
+    if (currentCat === 'news' && item.category === 'program') return true;
+    return item.category === currentCat;
+  });
+
+  // 2. 現在のカテゴリ内に存在する「すべてのタグ」を自動で集計してフィルターボタンを作る
+  updateTagFilterArea(filtered);
+
+  // 3. もしタグが選択されていたら、さらにそのタグでフィルタリング
+  if (currentTag) {
+    filtered = filtered.filter(item => item.tags && item.tags.includes(currentTag));
+  }
+
+  // 4. カードの生成
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="no-data">該当するお写真はまだありません📷</div>';
+    return;
+  }
+
+  filtered.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    
+    // タグのHTML要素を生成
+    let tagsHtml = '';
+    if (item.tags && item.tags.length > 0) {
+      tagsHtml = item.tags.map(t => `<span class="card-hash-tag">#${t}</span>`).join('');
+    }
+
+    card.innerHTML = `
+      <div class="card-img-wrapper">
+        <img src="${item.img}" class="card-img" alt="${item.title}" loading="lazy">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">${item.title}</h2>
+        <p class="card-desc">${item.desc}</p>
+        <div class="card-tags">
+          ${tagsHtml}
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 }
 
-document.getElementById('news-grid').append(...newsCards.map(createCard));
-document.getElementById('program-grid').append(...newsCards.map(createCard));
+// カテゴリ内のデータからタグを抽出してフィルターエリアを更新する関数
+function updateTagFilterArea(currentData) {
+  const filterBlock = document.getElementById('tag-filter-block');
+  const tagListContainer = document.getElementById('tag-list');
+  
+  // カテゴリ内のデータからタグを重複なく抽出
+  const tagSet = new Set();
+  currentData.forEach(item => {
+    if (item.tags) {
+      item.tags.forEach(t => tagSet.add(t));
+    }
+  });
+
+  // もしそのカテゴリにタグが1つもなければ、フィルターエリアごと隠す
+  if (tagSet.size === 0) {
+    filterBlock.style.display = 'none';
+    currentTag = '';
+    return;
+  }
+
+  filterBlock.style.display = 'block';
+  tagListContainer.innerHTML = '';
+
+  // 「すべて（タグ解除）」ボタンを先頭に作成
+  const allTagBtn = document.createElement('button');
+  allTagBtn.className = `tag-btn ${currentTag === '' ? 'active' : ''}`;
+  allTagBtn.textContent = 'すべて解除';
+  allTagBtn.addEventListener('click', () => {
+    currentTag = '';
+    renderPage();
+  });
+  tagListContainer.appendChild(allTagBtn);
+
+  // 抽出したタグをボタンにして並べる
+  tagSet.forEach(tagName => {
+    const btn = document.createElement('button');
+    btn.className = `tag-btn ${currentTag === tagName ? 'active' : ''}`;
+    btn.textContent = `#${tagName}`;
+    btn.addEventListener('click', () => {
+      // 同じタグをもう一度押したら解除、違うタグならそれを選択
+      currentTag = (currentTag === tagName) ? '' : tagName;
+      renderPage();
+    });
+    tagListContainer.appendChild(btn);
+  });
+}
 </script>
 
 </body>
