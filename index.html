@@ -13,14 +13,15 @@ body {
   margin: 0; padding: 0; line-height: 1.6;
 }
 
-/* --- 📁 【1. トップバー】ロゴを左、指定の5メニューを【右寄せ】 --- */
+/* --- 📁 【1. トップバー】ロゴもメニューもまとめて【中央寄せ】で見やすく！ --- */
 .site-header {
   background-color: white;
   border-bottom: 2px solid #f0e1bc;
-  padding: 15px 40px;
+  padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* ✨ 中央にギュッと集めるよ！ */
   align-items: center;
+  gap: 50px; /* ロゴとメニューの間の心地いいディスタンス💕 */
 }
 .logo-area {
   display: flex; align-items: center; gap: 10px;
@@ -77,10 +78,10 @@ body {
 /* --- 🖼️ 【左側】広々メインコンテンツエリア --- */
 .main-content { flex-grow: 1; }
 
-/* 写真カードグリッド（各カードの高さを綺麗に揃える設定付き） */
+/* 写真カードグリッド */
 .grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 30px;
-  align-items: stretch; /* これで横並びのカードの縦の高さがピシッと揃うよ！ */
+  align-items: stretch;
 }
 .card {
   background: white; border-radius: 20px; overflow: hidden;
@@ -147,8 +148,8 @@ body {
 
 /* スマホ対応 */
 @media (max-width: 900px) {
-  .site-header { flex-direction: column; padding: 15px; }
-  .top-nav { flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
+  .site-header { flex-direction: column; padding: 15px; gap: 15px; }
+  .top-nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
   .container { flex-direction: column; }
   .sidebar { width: 100%; }
 }
@@ -189,7 +190,7 @@ body {
 
   <aside class="sidebar">
     <div class="sidebar-sticky">
-      <div class="widget">
+      <div class="widget" id="tag-filter-widget">
         <h2 class="widget-title">🔍 タグで絞り込む</h2>
         <div class="tag-list" id="tag-list"></div>
       </div>
@@ -209,17 +210,15 @@ body {
 </div>
 
 <script>
-// 📄 【おにーちゃん調整用】1ページあたりに表示したいカードの件数！
 const ITEMS_PER_PAGE = 6; 
 
 let allData = [];
 let currentMiddleCat = 'all'; 
 let currentTagName = '';      
 let mode = 'top';             
-let currentPage = 1; // 現在開いているページ番号
+let currentPage = 1; 
 
 document.addEventListener('DOMContentLoaded', () => {
-  // おにーちゃんが用意した本物のデータをロードするよ！
   fetch('data.json')
     .then(res => {
       if (!res.ok) throw new Error('data.jsonの読み込みに失敗したよ💦');
@@ -238,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function switchTopNav(targetMode) {
   mode = targetMode;
   currentTagName = ''; 
-  currentPage = 1; // ページをリセット！
+  currentPage = 1; 
   
   document.querySelectorAll('.top-nav-item').forEach(el => {
     el.classList.remove('active');
@@ -247,15 +246,18 @@ function switchTopNav(targetMode) {
 
   const display = document.getElementById('main-content-area');
   const middleBar = document.getElementById('middle-menu-bar');
+  const tagWidget = document.getElementById('tag-filter-widget'); // ✨ タグの枠を取得！
 
   if (targetMode === 'top') {
     middleBar.style.display = 'flex'; 
+    tagWidget.style.display = 'block'; // ✨ TOPの時はタグ一覧を復活させる！
     currentMiddleCat = 'all'; 
     resetMiddleTabActive();
     renderDataGrid(); 
   } 
   else {
     middleBar.style.display = 'none'; 
+    tagWidget.style.display = 'none'; // ✨ 園について・すくわくの時はタグ一覧を【非表示】！！
     
     if (targetMode === 'about') {
       display.innerHTML = `
@@ -268,11 +270,10 @@ function switchTopNav(targetMode) {
       display.innerHTML = `
         <div class="info-box">
           <h2>✨ すくわくプログラム</h2>
-          <p>子どもたちが五感をフルに使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでいきます。</p>
+          <p>子どもたちが五感をフルに使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでしていきます。</p>
           <p style="margin-top: 15px;">季節ごとのプログラムや、外部講師を招いた楽しいイベントも盛りだくさんですッ！</p>
         </div>`;
     }
-    updateSidebarTags(allData); 
   }
 }
 
@@ -280,7 +281,7 @@ function switchTopNav(targetMode) {
 function switchMiddleTab(cat) {
   currentMiddleCat = cat;
   currentTagName = ''; 
-  currentPage = 1; // タブを変えたら1ページ目に戻すよ！
+  currentPage = 1; 
   
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
@@ -297,7 +298,7 @@ function resetMiddleTabActive() {
   });
 }
 
-// 写真カードグリッド ＆ ページネーションを描画するコア関数【鉄壁ガード版】
+// 写真カードグリッド ＆ ページネーションを描画するコア関数
 function renderDataGrid() {
   const display = document.getElementById('main-content-area');
   display.innerHTML = `
@@ -313,6 +314,7 @@ function renderDataGrid() {
     filtered = allData.filter(d => d && d.category === currentMiddleCat);
   }
 
+  // タグリストの更新（TOPの時だけ意味があるよ）
   updateSidebarTags(filtered);
 
   if (currentTagName) {
@@ -341,16 +343,15 @@ function renderDataGrid() {
     card.className = 'card';
     card.style.display = 'flex';
     card.style.flexDirection = 'column';
-    card.style.height = '100%'; // ✨ これで隣のカードと高さを100%均等に揃えるよ！
+    card.style.height = '100%';
 
     let tagsHtml = '';
     if (item.tags && Array.isArray(item.tags)) {
       tagsHtml = item.tags.map(t => `<span style="font-size:11px; color:#bf8740; background:rgba(216,163,93,0.05); padding:3px 8px; border-radius:4px; font-weight:bold; margin-right:5px;">#${t}</span>`).join('');
     }
 
-    // ✨ 【デスクリプション欠損対策】データが空っぽでも「空白」を代入して表示崩れを完全防御！
     const displayTitle = item.title ? item.title : '（タイトルなし）';
-    const displayDesc = item.desc ? item.desc : ' '; // 空文字列の時は半角スペースを入れて高さを維持するよ！
+    const displayDesc = item.desc ? item.desc : ' '; 
     const displayImg = item.img ? item.img : 'images/hero.jpg';
 
     card.innerHTML = `
@@ -365,7 +366,6 @@ function renderDataGrid() {
     grid.appendChild(card);
   });
 
-  // 📄 ページ番号ボタンの生成ロジック
   if (totalPages > 1) {
     let pgHtml = '';
     const prevDisabled = (currentPage === 1) ? 'disabled' : '';
@@ -385,7 +385,6 @@ function renderDataGrid() {
   }
 }
 
-// 📄 ページを切り替える関数
 function changePage(pageNumber) {
   currentPage = pageNumber;
   renderDataGrid();
@@ -418,17 +417,6 @@ function updateSidebarTags(data) {
     btn.onclick = () => {
       currentTagName = (currentTagName === t) ? '' : t;
       currentPage = 1; 
-      
-      if (mode !== 'top') {
-        mode = 'top';
-        document.getElementById('middle-menu-bar').style.display = 'flex';
-        document.querySelectorAll('.top-nav-item').forEach(el => {
-          el.classList.remove('active');
-          if (el.getAttribute('data-tab') === 'top') el.classList.add('active');
-        });
-        currentMiddleCat = 'all';
-        resetMiddleTabActive();
-      }
       renderDataGrid();
     };
     tagList.appendChild(btn);
