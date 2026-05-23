@@ -87,7 +87,7 @@ body {
 /* --- 🖼️ 【左側】メインコンテンツエリア --- */
 .main-content { flex-grow: 1; }
 
-/* 1カラム風の綺麗な紹介ボックス（園について・すくわくプログラム用） */
+/* 1カラム風の紹介ボックス */
 .info-box {
   background: white; padding: 35px; border-radius: 20px; border: 1px solid #e8dfd2;
   box-shadow: 0 6px 20px rgba(0,0,0,0.01); margin-bottom: 30px;
@@ -105,7 +105,7 @@ body {
 }
 .card:hover { transform: translateY(-5px); }
 
-/* --- 🔍 【右側】サイドバー基地（タグ＋TikTok＋Insta＋Twitterバナー） --- */
+/* --- 🔍 【右側】サイドバー基地 --- */
 .sidebar { width: 300px; flex-shrink: 0; }
 .sidebar-sticky { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 30px; }
 
@@ -137,4 +137,123 @@ body {
   background: linear-gradient(135deg, #1da1f2, #0c85d0);
   color: white; padding: 18px; border-radius: 14px; text-align: center;
   text-decoration: none; font-weight: bold; font-size: 14px; display: block;
-  box-shadow: 0 4px 15px rgba(29,161,242,0.2); transition
+  box-shadow: 0 4px 15px rgba(29,161,242,0.2); transition: transform 0.2s;
+}
+.twitter-banner:hover { transform: scale(1.02); }
+
+/* スマホ対応 */
+@media (max-width: 900px) {
+  .site-header { flex-direction: column; gap: 15px; padding: 15px; }
+  .header-right-menu { flex-wrap: wrap; justify-content: center; gap: 15px; }
+  .container { flex-direction: column; }
+  .sidebar { width: 100%; }
+  .sidebar-sticky { position: static; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="#" class="logo-area">
+    <span class="logo-mark">🌻</span> ひまわりキッズガーデン
+  </a>
+  <div class="header-right-menu">
+    <a href="https://example.com/corporate" class="corporate-link" target="_blank">法人HP ↗</a>
+    <a href="#" class="corporate-link">お問い合わせ ↗</a>
+  </div>
+</header>
+
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>🌻 ひまわりキッズガーデン ポータル</h1>
+    <p>子どもたちの笑顔あふれる日常と、ワクワクするプログラムを配信中！</p>
+  </div>
+</div>
+
+<nav class="tab-section">
+  <button class="tab-btn active" data-category="about">園について</button>
+  <button class="tab-btn" data-category="program">すくわくプログラム</button>
+  <button class="tab-btn" data-category="news">最新のお知らせ</button>
+  <button class="tab-btn" data-category="event">地域イベント</button>
+</nav>
+
+<div class="container">
+  <main class="main-content">
+    <div id="content-display">
+      <div class="info-box">
+        <h2>🌱 園について</h2>
+        <p>ひまわりキッズガーデンでは、子どもたち一人ひとりの「やってみたい！」という好奇心の芽を大切に育んでいます。安心安全な環境の中で、お友達や先生とたくさんのワクワクを見つけていきます。</p>
+        <p style="margin-top: 15px;">【教育・保育方針】<br>・心身ともに健康で、たくましい子ども<br>・自分で考え、のびのびと表現できる子ども<br>・思いやりの心を持てる子ども</p>
+      </div>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="sidebar-sticky">
+      <div class="widget">
+        <h2 class="widget-title">🔍 タグでさらに絞り込む</h2>
+        <div class="tag-list" id="tag-list">
+          <p style="font-size:12px; color:#999; margin:0;">選択中のカテゴリにはタグがありません</p>
+        </div>
+      </div>
+      
+      <div class="widget">
+        <h2 class="widget-title">🎵 TikTok</h2>
+        <div class="sns-timeline">TikTokの埋め込み（タイムライン）がここに入るよ！</div>
+      </div>
+
+      <div class="widget">
+        <h2 class="widget-title">📸 Instagram</h2>
+        <div class="sns-timeline">Instagramのタイムラインフィードがここに入るよ！</div>
+      </div>
+
+      <a href="https://twitter.com" class="twitter-banner" target="_blank">
+        X (Twitter) で最新情報をチェック！ ↗
+      </a>
+    </div>
+  </aside>
+</div>
+
+<script>
+let allData = [];
+let currentCat = 'about'; 
+let currentTag = '';
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 読み込みエラーが起きても絶対に全体を落とさない安全fetch
+  fetch('data.json')
+    .then(response => {
+      if (!response.ok) throw new Error('data.jsonの読み込みに失敗したよ');
+      return response.json();
+    })
+    .then(data => {
+      allData = data;
+      // 最初の読み込み成功時、もし初期カテゴリが'about'以外だったら描画する
+      if (currentCat !== 'about') {
+        renderPage();
+      }
+    })
+    .catch(err => {
+      console.error("JSONの読み込みをスキップして、固定メッセージモードで動作します:", err);
+      allData = [];
+    });
+
+  // タブボタンのクリックイベント
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      currentCat = e.target.getAttribute('data-category');
+      currentTag = ''; 
+      renderPage();
+    });
+  });
+});
+
+function renderPage() {
+  const display = document.getElementById('content-display');
+  display.innerHTML = ''; // クリア
+
+  // 1. 【園について】の固定紹介テキスト
+  if (currentCat === 'about') {
+    display.innerHTML =
