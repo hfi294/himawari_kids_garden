@@ -13,7 +13,7 @@ body {
   margin: 0; padding: 0; line-height: 1.6;
 }
 
-/* --- 📁 【1. トップバー】ロゴを左、指定の5メニューを【右寄せ】にがっちり配置 --- */
+/* --- 📁 【1. トップバー】ロゴを左、指定の5メニューを【右寄せ】 --- */
 .site-header {
   background-color: white;
   border-bottom: 2px solid #f0e1bc;
@@ -37,7 +37,7 @@ body {
   color: #f57c00; border-bottom: 2px solid #f57c00;
 }
 
-/* --- 🌟 【2. ヒーローイメージ】ヘッダーのすぐ下 --- */
+/* --- 🌟 【2. ヒーローイメージ】 --- */
 .hero-section {
   position: relative; width: 100%; height: 350px;
   background: #efe5d5 url('images/hero.jpg') center/cover no-repeat;
@@ -77,7 +77,7 @@ body {
 /* --- 🖼️ 【左側】広々メインコンテンツエリア --- */
 .main-content { flex-grow: 1; }
 
-/* 写真カードグリッド（TOPタブ用） */
+/* 写真カードグリッド */
 .grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 30px;
 }
@@ -88,7 +88,7 @@ body {
 }
 .card:hover { transform: translateY(-5px); }
 
-/* 1カラム風の綺麗な紹介ボックス（園について・すくわく用） */
+/* 1カラム風の紹介ボックス（園について・すくわく用） */
 .info-box {
   background: white; padding: 40px; border-radius: 20px; border: 1px solid #e8dfd2;
   box-shadow: 0 6px 20px rgba(0,0,0,0.01); line-height: 1.8;
@@ -173,17 +173,14 @@ body {
         <h2 class="widget-title">🔍 タグで絞り込む</h2>
         <div class="tag-list" id="tag-list"></div>
       </div>
-      
       <div class="widget">
         <h2 class="widget-title">🎵 TikTok</h2>
         <div class="sns-placeholder">TikTokのタイムラインフィードがここに入るよ！</div>
       </div>
-
       <div class="widget">
         <h2 class="widget-title">📸 Instagram</h2>
         <div class="sns-placeholder">Instagramのタイムラインフィードがここに入るよ！</div>
       </div>
-
       <a href="https://twitter.com" class="twitter-banner" target="_blank">
         X (Twitter) で最新情報をチェック！ ↗
       </a>
@@ -193,35 +190,31 @@ body {
 
 <script>
 let allData = [];
-let currentMiddleCat = 'all'; // 下のタブ状態（all / news / event）
-let currentTagName = '';      // 選択中のタグ
-let mode = 'top';             // トップバーの状態（top / about / program）
+let currentMiddleCat = 'all'; 
+let currentTagName = '';      
+let mode = 'top';             
 
 document.addEventListener('DOMContentLoaded', () => {
-  // data.jsonをロード
+  // おにーちゃんが用意してくれたデータをロード！
   fetch('data.json')
     .then(res => {
-      if (!res.ok) throw new Error('data.jsonが読み込めないよ💦');
+      if (!res.ok) throw new Error('data.jsonの読み込みに失敗したよ💦');
       return res.json();
     })
     .then(data => {
       allData = data;
-      // 開いた瞬間はTOPモードなので、カードとタグを初期描写！
-      renderDataGrid();
+      renderDataGrid(); // おにーちゃんのデータでカードを作るよ！
     })
     .catch(err => {
-      console.error("JSON読み込みエラー:", err);
-      allData = [];
-      renderDataGrid();
+      console.error("データ読み込みエラー:", err);
     });
 });
 
-// 📁 【トップバー】をクリックした時の超スッキリ出し分けロジック！
+// 📁 【トップバー】クリック時の切り替え
 function switchTopNav(targetMode) {
   mode = targetMode;
-  currentTagName = ''; // タグ選択をリセット
+  currentTagName = ''; 
   
-  // トップバーのアクティブ表示を切り替え
   document.querySelectorAll('.top-nav-item').forEach(el => {
     el.classList.remove('active');
     if (el.getAttribute('data-tab') === targetMode) el.classList.add('active');
@@ -231,16 +224,13 @@ function switchTopNav(targetMode) {
   const middleBar = document.getElementById('middle-menu-bar');
 
   if (targetMode === 'top') {
-    // 【おにーちゃん指定】TOPの時だけ真ん中メニューを表示！！
-    middleBar.style.display = 'flex'; 
-    currentMiddleCat = 'all'; // カテゴリを全部表示にリセット
+    middleBar.style.display = 'flex'; // TOPの時だけ復活！！
+    currentMiddleCat = 'all'; 
     resetMiddleTabActive();
-    renderDataGrid(); // 写真カードを再描写
+    renderDataGrid(); 
   } 
   else if (targetMode === 'about') {
-    // TOP以外は真ん中メニューを非表示に消し去る！
     middleBar.style.display = 'none'; 
-    
     display.innerHTML = `
       <div class="info-box">
         <h2>🌱 園について</h2>
@@ -250,23 +240,21 @@ function switchTopNav(targetMode) {
     updateSidebarTags(allData); 
   } 
   else if (targetMode === 'program') {
-    // 当然すくわくプログラムでも真ん中メニューは非表示！
     middleBar.style.display = 'none'; 
-    
     display.innerHTML = `
       <div class="info-box">
         <h2>✨ すくわくプログラム</h2>
-        <p>子どもたちが五感をフル使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでいきます。</p>
+        <p>子どもたちが五感をフルに使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでいきます。</p>
         <p style="margin-top: 15px;">季節ごとのプログラムや、外部講師を招いた楽しいイベントも盛りだくさんですッ！</p>
       </div>`;
     updateSidebarTags(allData);
   }
 }
 
-// 📁 【真ん中のメニュー（タブ）】をクリックした時
+// 📁 【真ん中のメニュー】をクリックした時
 function switchMiddleTab(cat) {
   currentMiddleCat = cat;
-  currentTagName = ''; // タグ選択は一度リセット！
+  currentTagName = ''; 
   
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
@@ -276,7 +264,6 @@ function switchMiddleTab(cat) {
   renderDataGrid();
 }
 
-// 真ん中メニューのボタンアクティブ状態を「全部表示」に戻す関数
 function resetMiddleTabActive() {
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
@@ -290,16 +277,13 @@ function renderDataGrid() {
   display.innerHTML = '<div class="grid" id="photo-grid"></div>';
   const grid = document.getElementById('photo-grid');
 
-  // 真ん中メニューのカテゴリ（最新 or 地域 or 全部）でフィルター
   let filtered = allData;
   if (currentMiddleCat !== 'all') {
     filtered = allData.filter(d => d && d.category === currentMiddleCat);
   }
 
-  // 右側のタグリストは、選ばれているカテゴリに連動させて更新
   updateSidebarTags(filtered);
 
-  // さらに右カラムでタグが選ばれていたら絞り込む
   if (currentTagName) {
     filtered = filtered.filter(d => d && d.tags && d.tags.includes(currentTagName));
   }
@@ -316,4 +300,64 @@ function renderDataGrid() {
     
     let tagsHtml = '';
     if (item.tags && Array.isArray(item.tags)) {
-      tagsHtml = item.tags.map(t => `<span style="font-size:11px; color:#bf8740; background:rgba(216,163,93,0.05); padding:3px 8px; border-radius:4px; font-weight:
+      tagsHtml = item.tags.map(t => `<span style="font-size:11px; color:#bf8740; background:rgba(216,163,93,0.05); padding:3px 8px; border-radius:4px; font-weight:bold; margin-right:5px;">#${t}</span>`).join('');
+    }
+
+    // おにーちゃんのデータに入ってる「item.img」の画像URLをそのまんまぶち込むよ！
+    card.innerHTML = `
+      <div style="position:relative; padding-top:65%; background:#efe5d5;">
+        <img src="${item.img}" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
+      </div>
+      <div style="padding:20px; flex-grow:1; display:flex; flex-direction:column;">
+        <h3 style="margin:0 0 10px 0; font-size:16px; color:#4a433c;">${item.title || 'タイトルなし'}</h3>
+        <p style="font-size:13px; color:#746b63; flex-grow:1; margin:0 0 15px 0;">${item.desc || ''}</p>
+        <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:auto;">${tagsHtml}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// 右カラムのタグリストを動的に書き換えるロジック
+function updateSidebarTags(data) {
+  const tagList = document.getElementById('tag-list');
+  const tagSet = new Set();
+  
+  if (Array.isArray(data)) {
+    data.forEach(d => {
+      if (d && d.tags && Array.isArray(d.tags)) {
+        d.tags.forEach(t => tagSet.add(t));
+      }
+    });
+  }
+
+  if (tagSet.size === 0) {
+    tagList.innerHTML = '<p style="font-size:12px; color:#999; margin:0;">該当するタグがありません</p>';
+    return;
+  }
+
+  tagList.innerHTML = '';
+  tagSet.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = `tag-btn ${currentTagName === t ? 'active' : ''}`;
+    btn.textContent = `#${t}`;
+    btn.onclick = () => {
+      currentTagName = (currentTagName === t) ? '' : t;
+      
+      if (mode !== 'top') {
+        mode = 'top';
+        document.getElementById('middle-menu-bar').style.display = 'flex';
+        document.querySelectorAll('.top-nav-item').forEach(el => {
+          el.classList.remove('active');
+          if (el.getAttribute('data-tab') === 'top') el.classList.add('active');
+        });
+        currentMiddleCat = 'all';
+        resetMiddleTabActive();
+      }
+      renderDataGrid();
+    };
+    tagList.appendChild(btn);
+  });
+}
+</script>
+</body>
+</html>
