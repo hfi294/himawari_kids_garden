@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ひまわりキッズガーデン ポータル</title>
 <style>
-/* --- 基本デザイン（ひまわりカラー＆北欧風） --- */
+/* --- 基本デザイン（ひまわりカラー＆温かみのある北欧風） --- */
 body {
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
   background-color: #fcfaf2;
@@ -13,13 +13,13 @@ body {
   margin: 0; padding: 0; line-height: 1.6;
 }
 
-/* --- 📁 【一番上】法人ヘッダー：左ロゴ・右ナビ --- */
+/* --- 📁 【一番上】ロゴ以外をすべて右寄せにした洗練ヘッダー --- */
 .site-header {
   background-color: white;
   border-bottom: 2px solid #f0e1bc;
   padding: 15px 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* ロゴとメニューを両端にバシッと分けるよ！ */
   align-items: center;
 }
 .logo-area {
@@ -28,13 +28,41 @@ body {
 }
 .logo-mark { color: #ffb300; font-size: 28px; }
 
-.header-nav { display: flex; gap: 20px; }
-.header-link {
-  color: #7b5b35; text-decoration: none; font-size: 14px; font-weight: bold;
+/* ロゴ以外のメニューを右側に綺麗に並べるエリア */
+.header-right-menu {
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
-.header-link:hover { color: #d8a35d; }
+.corporate-link {
+  color: #7b5b35; text-decoration: none; font-size: 14px; font-weight: bold;
+  transition: color 0.2s;
+}
+.corporate-link:hover { color: #d8a35d; }
 
-/* --- 📁 【真ん中】メインメニュー（タブ形式） --- */
+/* --- 🌟 【復活ッ！】ヘッダーのすぐ下にドカンと構えるヒーローイメージ --- */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  background: #efe5d5 url('images/hero.jpg') center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-section::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(74, 67, 60, 0.35); /* 写真が綺麗に馴染むスモーク効果 */
+}
+.hero-content {
+  position: relative; z-index: 1; text-align: center; color: white; padding: 0 20px;
+}
+.hero-content h1 {
+  margin: 0; font-size: 36px; font-weight: bold; text-shadow: 0 2px 12px rgba(0,0,0,0.3); letter-spacing: 2px;
+}
+.hero-content p {
+  margin: 12px 0 0 0; font-size: 15px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* --- 📁 【真ん中】おにーちゃん指定配列のメインメニュー（タブ） --- */
 .tab-section {
   background-color: #fffdf9;
   padding: 20px 0;
@@ -53,220 +81,71 @@ body {
   background-color: #f57c00; color: white; box-shadow: 0 4px 12px rgba(245,124,0,0.3);
 }
 
-/* --- 📦 2カラムレイアウト --- */
+/* --- 📦 2カラムメインコンテナ --- */
 .container {
   max-width: 1300px; margin: 0 auto; padding: 40px 20px;
   display: flex; gap: 40px;
 }
 
-/* --- 🖼️ 【左側】メインコンテンツ（1カラムタブの内容） --- */
+/* --- 🖼️ 【左側】広々メインコンテンツエリア --- */
 .main-content { flex-grow: 1; }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 30px;
+/* 1カラムタブ（園について、すくわくプログラム）の時の美しいボックス */
+.one-column-box {
+  background: white; padding: 35px; border-radius: 20px; border: 1px solid #e8dfd2;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.01);
 }
-/* カード等のスタイル（中身はJSONから召喚） */
+.one-column-title { color: #5d4037; font-size: 24px; margin-top: 0; margin-bottom: 15px; }
+
+/* お知らせ・イベントの時の写真グリッド */
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 30px;
+}
 .card {
   background: white; border-radius: 20px; overflow: hidden;
   border: 1px solid #e8dfd2; display: flex; flex-direction: column;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.02); transition: transform 0.25s;
 }
+.card:hover { transform: translateY(-5px); }
 
-/* --- 🔍 【右側】おにーちゃん指定のサイドバー基地 --- */
+/* --- 🔍 【右側】おにーちゃん指定のサイドバー基地（タグ＋TikTok＋Insta＋Twitter） --- */
 .sidebar { width: 300px; flex-shrink: 0; }
 .sidebar-sticky { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 30px; }
 
-/* ウィジェット共通 */
+/* ウィジェットの共通デザイン */
 .widget {
   background: white; border: 1px solid #e8dfd2; border-radius: 16px; padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.01);
 }
 .widget-title {
   font-size: 14px; color: #8f6b3d; margin: 0 0 15px 0; border-bottom: 1px solid #f0e1bc; padding-bottom: 8px;
+  font-weight: bold; letter-spacing: 1px;
 }
 
-/* タグリスト */
+/* タグボタン */
 .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag-btn {
   background: #f4f0e6; color: #6b6258; border: 1px solid #e8dfd2;
-  padding: 5px 12px; font-size: 12px; border-radius: 8px; cursor: pointer;
+  padding: 5px 12px; font-size: 12px; border-radius: 8px; cursor: pointer; transition: 0.2s;
 }
 .tag-btn.active { background: #7b5b35; color: white; border-color: #7b5b35; }
 
-/* SNSタイムライン枠 */
-.sns-placeholder {
-  height: 200px; background: #fafafa; border: 1px dashed #ccc;
-  display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px;
+/* SNS埋め込み用プレースホルダー */
+.sns-timeline {
+  height: 250px; background: #fafafa; border: 1px dashed #d0c5b4; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; color: #9a8f84; font-size: 12px;
 }
 
-/* Twitterバナー風 */
+/* X (Twitter) バナー */
 .twitter-banner {
   background: linear-gradient(135deg, #1da1f2, #0c85d0);
-  color: white; padding: 15px; border-radius: 12px; text-align: center;
+  color: white; padding: 18px; border-radius: 14px; text-align: center;
   text-decoration: none; font-weight: bold; font-size: 14px; display: block;
+  box-shadow: 0 4px 15px rgba(29,161,242,0.2); transition: transform 0.2s;
 }
+.twitter-banner:hover { transform: scale(1.02); }
 
 /* スマホ対応 */
 @media (max-width: 900px) {
-  .site-header { flex-direction: column; gap: 15px; }
-  .container { flex-direction: column; }
-  .sidebar { width: 100%; }
-}
-</style>
-</head>
-<body>
-
-<header class="site-header">
-  <a href="#" class="logo-area">
-    <span class="logo-mark">🌻</span> ひまわりキッズガーデン
-  </a>
-  <nav class="header-nav">
-    <a href="#" class="header-link">園について</a>
-    <a href="#" class="header-link">すくわくプログラム</a>
-    <a href="https://example.com" class="header-link" target="_blank">法人HP ↗</a>
-    <a href="#" class="header-link">お問い合わせ ↗</a>
-  </nav>
-</header>
-
-<nav class="tab-section">
-  <button class="tab-btn active" data-category="about">園について</button>
-  <button class="tab-btn" data-category="program">すくわくプログラム</button>
-  <button class="tab-btn" data-category="news">最新のお知らせ</button>
-  <button class="tab-btn" data-category="event">地域イベント</button>
-</nav>
-
-<div class="container">
-  <main class="main-content">
-    <div id="content-display">
-      </div>
-  </main>
-
-  <aside class="sidebar">
-    <div class="sidebar-sticky">
-      <div class="widget">
-        <h2 class="widget-title">🔍 タグで絞り込む</h2>
-        <div class="tag-list" id="tag-list"></div>
-      </div>
-      
-      <div class="widget">
-        <h2 class="widget-title">TikTok</h2>
-        <div class="sns-placeholder">TikTokの埋め込みがここに入るよ！</div>
-      </div>
-
-      <div class="widget">
-        <h2 class="widget-title">Instagram</h2>
-        <div class="sns-placeholder">Instagramのタイムラインがここに入るよ！</div>
-      </div>
-
-      <a href="#" class="twitter-banner">
-        X (Twitter) で最新情報をチェック！
-      </a>
-    </div>
-  </aside>
-</div>
-
-<script>
-// おにーちゃん！ここからのJSは、これまでのJSON読み込みロジックを
-// 新しいタブ形式に合わせてあやねが調整したものだよ！
-let allData = [];
-let currentCat = 'about'; // 最初は「園について」
-let currentTag = '';
-
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('data.json')
-    .then(response => response.json())
-    .then(data => {
-      allData = data;
-      renderPage();
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById('content-display').innerHTML = "データを読み込めなかったよ💦";
-    });
-
-  // タブのクリックイベント
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      e.target.classList.add('active');
-      currentCat = e.target.getAttribute('data-category');
-      currentTag = ''; 
-      renderPage();
-    });
-  });
-});
-
-function renderPage() {
-  const display = document.getElementById('content-display');
-  
-  // 「園について」など、固定の紹介文を入れたい場合の処理
-  if (currentCat === 'about') {
-    display.innerHTML = `
-      <div style="background:white; padding:30px; border-radius:20px; border:1px solid #e8dfd2;">
-        <h2 style="color:#5d4037;">ひまわりキッズガーデンへようこそ！</h2>
-        <p>ここでは園の教育方針や、日々の生活についてご紹介します。</p>
-        <img src="images/hero.jpg" style="width:100%; border-radius:15px; margin-top:15px;">
-      </div>
-    `;
-    updateTagArea([]); // 園についてタブではタグなし
-    return;
-  }
-
-  // それ以外のタブ（JSONからカード形式で出す）
-  display.innerHTML = '<div class="grid" id="photo-grid"></div>';
-  const grid = document.getElementById('photo-grid');
-
-  let filtered = allData.filter(item => item.category === currentCat);
-  updateTagArea(filtered);
-
-  if (currentTag) {
-    filtered = filtered.filter(item => item.tags && item.tags.includes(currentTag));
-  }
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="no-data">まだ投稿がありません📷</div>';
-    return;
-  }
-
-  filtered.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div style="position:relative; padding-top:65%; background:#efe5d5;">
-        <img src="${item.img}" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
-      </div>
-      <div style="padding:20px;">
-        <h3 style="margin:0 0 10px 0; font-size:17px;">${item.title}</h3>
-        <p style="font-size:13px; color:#746b63;">${item.desc}</p>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-function updateTagArea(data) {
-  const tagList = document.getElementById('tag-list');
-  const tagSet = new Set();
-  data.forEach(item => item.tags && item.tags.forEach(t => tagSet.add(t)));
-
-  if (tagSet.size === 0) {
-    tagList.innerHTML = '<p style="font-size:12px; color:#999;">タグはありません</p>';
-    return;
-  }
-
-  tagList.innerHTML = '';
-  tagSet.forEach(tagName => {
-    const btn = document.createElement('button');
-    btn.className = `tag-btn ${currentTag === tagName ? 'active' : ''}`;
-    btn.textContent = `#${tagName}`;
-    btn.onclick = () => {
-      currentTag = (currentTag === tagName) ? '' : tagName;
-      renderPage();
-    };
-    tagList.appendChild(btn);
-  });
-}
-</script>
-
-</body>
-</html>
+  .site-header { flex-direction: column; gap: 15px; padding: 15px; }
+  .header-right-menu { flex-wrap: wrap; justify-content: center; gap
