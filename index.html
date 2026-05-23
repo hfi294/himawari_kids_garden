@@ -15,20 +15,67 @@ body {
   line-height: 1.6;
 }
 
-/* --- 📁 【完全復活】最初のスタイリッシュなヘッダーメニュー --- */
+/* --- 📁 【完全復元】法人ロゴ＆HPリンク付き最上部ヘッダー --- */
 header {
+  background-color: transparent; /* 最初の透明感ある空気感を維持 */
   max-width: 1300px;
   margin: 0 auto;
-  padding: 25px 20px 15px 20px;
+  padding: 20px;
   display: flex;
-  justify-content: flex-end; /* 最初のコードと同じく右寄せでスッキリ配置 */
+  justify-content: space-between; /* 左にロゴ、右にHPリンクの黄金比！ */
+  align-items: center;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #4a433c;
+}
+.logo-mark {
+  background-color: #d8a35d;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+.logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.corporate-nav {
+  display: flex;
+  gap: 20px;
+}
+.corporate-link {
+  color: #7b5b35;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.corporate-link:hover {
+  color: #d8a35d;
+}
+
+/* --- 📁 ヒーローの下に配置されたスマートなカテゴリメニュー（すべて表示は廃止！） --- */
+.category-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 20px 0 20px;
 }
 .category-nav {
   display: flex;
   gap: 12px;
 }
 .category-btn {
-  background-color: transparent; /* 最初の透明感あるボタン */
+  background-color: transparent;
   color: #7b5b35;
   border: 1px solid #e8dfd2;
   padding: 8px 20px;
@@ -48,15 +95,16 @@ header {
   border-color: #d8a35d;
 }
 
-/* --- 🌟 ヒーローイメージ（最初の美しい比率と重厚感） --- */
+/* --- 🌟 ヒーローイメージ --- */
 .hero-section {
   position: relative;
   width: 100%;
-  height: 420px;
+  height: 380px;
   background: #efe5d5 url('images/hero.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
 }
 .hero-section::before {
   content: '';
@@ -73,14 +121,14 @@ header {
 }
 .hero-content h1 {
   margin: 0;
-  font-size: 36px;
+  font-size: 34px;
   font-weight: bold;
   text-shadow: 0 2px 12px rgba(0,0,0,0.3);
   letter-spacing: 2px;
 }
 .hero-content p {
   margin: 15px 0 0 0;
-  font-size: 16px;
+  font-size: 15px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
@@ -88,14 +136,14 @@ header {
 .container {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 50px 20px;
+  padding: 40px 20px;
 }
 .main-layout {
   display: flex;
   gap: 40px;
 }
 
-/* --- 🖼️ 【左側】フォトカードグリッド（最初のサイズ感・余白） --- */
+/* --- 🖼️ 【左側】フォトカードグリッド --- */
 .content-area {
   flex-grow: 1;
 }
@@ -220,8 +268,12 @@ header {
 /* --- スマホ対応 --- */
 @media (max-width: 900px) {
   header {
-    justify-content: center;
-    padding: 15px 10px;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+  .category-section {
+    padding: 0 15px;
   }
   .category-nav {
     flex-wrap: wrap;
@@ -233,10 +285,10 @@ header {
     font-size: 12px;
   }
   .hero-section {
-    height: 280px;
+    height: 240px;
   }
   .hero-content h1 {
-    font-size: 26px;
+    font-size: 24px;
   }
   .main-layout {
     flex-direction: column-reverse;
@@ -252,17 +304,29 @@ header {
 </head>
 <body>
 
-<!-- 📁 【最上部】最初の洗練されたデザインそのままのヘッダーメニュー -->
+<!-- 📁 【最上部】おにーちゃんの記憶通り！ロゴ＆法人リンクのオフィシャルヘッダー -->
 <header>
-  <nav class="category-nav">
-    <button class="category-btn active" data-category="all">すべて表示</button>
-    <button class="category-btn" data-category="news">最新のお知らせ</button>
-    <button class="category-btn" data-category="event">地域イベント</button>
-    <button class="category-btn" data-category="program">すくわくプログラム</button>
+  <a href="#" class="logo-area">
+    <div class="logo-mark">🌱</div>
+    <span class="logo-text">すくわくネットワーク</span>
+  </a>
+  <nav class="corporate-nav">
+    <a href="https://example.com/corporate" class="corporate-link" target="_blank">法人HP ↗</a>
+    <a href="https://example.com/contact" class="corporate-link" target="_blank">お問い合わせ ↗</a>
   </nav>
 </header>
 
-<!-- 🌟 ヘッダーメニューの下：美しいヒーローセクション -->
+<!-- 📁 カテゴリ選択エリア（「すべて表示」を撤廃してスマートに！） -->
+<div class="category-section">
+  <nav class="category-nav">
+    <!-- 最初のカテゴリ「最新のお知らせ」をデフォルトで選択状態にするよ！ -->
+    <button class="category-btn active" data-category="news">最新のお知らせ</button>
+    <button class="category-btn" data-category="event">地域イベント</button>
+    <button class="category-btn" data-category="program">すくわくプログラム</button>
+  </nav>
+</div>
+
+<!-- 🌟 美しいヒーローセクション -->
 <div class="hero-section">
   <div class="hero-content">
     <h1>🌱 すくわくネットワーク ポータル</h1>
@@ -270,18 +334,18 @@ header {
   </div>
 </div>
 
-<!-- 📦 2カラム（左メイン写真 / 右タグ） -->
+<!-- 📦 2カラム（左メイン写真 / 右タグサイドバー） -->
 <div class="container">
   <div class="main-layout">
     
     <!-- 🖼️ 左側：メインカード表示エリア -->
     <main class="content-area">
       <div class="grid" id="photo-grid">
-        <!-- ここに最初の美しさでカードが並ぶよ！ -->
+        <!-- ここにおにーちゃんのデータが並ぶよ！ -->
       </div>
     </main>
 
-    <!-- 🔍 右側：タグフィルター基地 -->
+    <!-- 🔍 右側：タグフィルターサイドバー -->
     <aside class="sidebar">
       <div class="sidebar-sticky">
         <div class="tag-block" id="tag-filter-block" style="display: none;">
@@ -295,8 +359,9 @@ header {
 </div>
 
 <script>
+// ※デフォルトのカテゴリを「news」にセットするよ！
 let allData = [];
-let currentCat = 'all';
+let currentCat = 'news'; 
 let currentTag = '';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -329,8 +394,8 @@ function renderPage() {
   const grid = document.getElementById('photo-grid');
   grid.innerHTML = '';
 
+  // 選択されたカテゴリだけでバシッとフィルタリング！
   let filtered = allData.filter(item => {
-    if (currentCat === 'all') return true;
     if (currentCat === 'news' && item.category === 'program') return true;
     return item.category === currentCat;
   });
