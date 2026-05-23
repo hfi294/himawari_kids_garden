@@ -77,9 +77,10 @@ body {
 /* --- 🖼️ 【左側】広々メインコンテンツエリア --- */
 .main-content { flex-grow: 1; }
 
-/* 写真カードグリッド */
+/* 写真カードグリッド（各カードの高さを綺麗に揃える設定付き） */
 .grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 30px;
+  align-items: stretch; /* これで横並びのカードの縦の高さがピシッと揃うよ！ */
 }
 .card {
   background: white; border-radius: 20px; overflow: hidden;
@@ -94,6 +95,24 @@ body {
   box-shadow: 0 6px 20px rgba(0,0,0,0.01); line-height: 1.8;
 }
 .info-box h2 { color: #5d4037; font-size: 24px; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #ffb300; padding-bottom: 10px; }
+
+/* 📄 ページネーションのデザインボタン */
+.pagination-container {
+  margin-top: 40px; display: flex; justify-content: center; align-items: center; gap: 8px;
+}
+.page-link {
+  background-color: white; color: #7b5b35; border: 1px solid #e8dfd2;
+  padding: 8px 16px; font-size: 14px; font-weight: bold; border-radius: 8px;
+  cursor: pointer; transition: 0.2s; text-decoration: none; user-select: none;
+}
+.page-link:hover { background-color: #efe5d5; color: #f57c00; }
+.page-link.active {
+  background-color: #f57c00; color: white; border-color: #f57c00;
+}
+.page-link.disabled {
+  background-color: #f4f0e6; color: #c0b7ad; border-color: #e8dfd2;
+  cursor: not-allowed; pointer-events: none;
+}
 
 /* --- 🔍 【右側】サイドバー基地（タグ ＞ TikTok ＞ Insta ＞ Twitter） --- */
 .sidebar { width: 300px; flex-shrink: 0; }
@@ -165,6 +184,7 @@ body {
 <div class="container">
   <main class="main-content" id="main-content-area">
     <div class="grid" id="photo-grid"></div>
+    <div class="pagination-container" id="pagination-box"></div>
   </main>
 
   <aside class="sidebar">
@@ -189,13 +209,17 @@ body {
 </div>
 
 <script>
+// 📄 【おにーちゃん調整用】1ページあたりに表示したいカードの件数！
+const ITEMS_PER_PAGE = 6; 
+
 let allData = [];
 let currentMiddleCat = 'all'; 
 let currentTagName = '';      
 let mode = 'top';             
+let currentPage = 1; // 現在開いているページ番号
 
 document.addEventListener('DOMContentLoaded', () => {
-  // おにーちゃんが用意してくれたデータをロード！
+  // おにーちゃんが用意した本物のデータをロードするよ！
   fetch('data.json')
     .then(res => {
       if (!res.ok) throw new Error('data.jsonの読み込みに失敗したよ💦');
@@ -203,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(data => {
       allData = data;
-      renderDataGrid(); // おにーちゃんのデータでカードを作るよ！
+      renderDataGrid(); 
     })
     .catch(err => {
       console.error("データ読み込みエラー:", err);
@@ -214,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function switchTopNav(targetMode) {
   mode = targetMode;
   currentTagName = ''; 
+  currentPage = 1; // ページをリセット！
   
   document.querySelectorAll('.top-nav-item').forEach(el => {
     el.classList.remove('active');
@@ -224,37 +249,38 @@ function switchTopNav(targetMode) {
   const middleBar = document.getElementById('middle-menu-bar');
 
   if (targetMode === 'top') {
-    middleBar.style.display = 'flex'; // TOPの時だけ復活！！
+    middleBar.style.display = 'flex'; 
     currentMiddleCat = 'all'; 
     resetMiddleTabActive();
     renderDataGrid(); 
   } 
-  else if (targetMode === 'about') {
+  else {
     middleBar.style.display = 'none'; 
-    display.innerHTML = `
-      <div class="info-box">
-        <h2>🌱 園について</h2>
-        <p>ひまわりキッズガーデンでは、一人ひとりの個性を大切に、のびのびと育つ環境を提供しています。安心安全な環境の中で、お友達や先生とたくさんのワクワクを見つけていきます。</p>
-        <p style="margin-top:15px;">【教育・保育方針】<br>・心身ともに健康で、たくましい子ども<br>・自分で考え、のびのびと表現できる子ども<br>・思いやりの心を持てる子ども</p>
-      </div>`;
+    
+    if (targetMode === 'about') {
+      display.innerHTML = `
+        <div class="info-box">
+          <h2>🌱 園について</h2>
+          <p>ひまわりキッズガーデンでは、一人ひとりの個性を大切に、のびのびと育つ環境を提供しています。安心安全な環境の中で、お友達や先生とたくさんのワクワクを見つけていきます。</p>
+          <p style="margin-top:15px;">【教育・保育方針】<br>・心身ともに健康で、たくましい子ども<br>・自分で考え、のびのびと表現できる子ども<br>・思いやりの心を持てる子ども</p>
+        </div>`;
+    } else if (targetMode === 'program') {
+      display.innerHTML = `
+        <div class="info-box">
+          <h2>✨ すくわくプログラム</h2>
+          <p>子どもたちが五感をフルに使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでいきます。</p>
+          <p style="margin-top: 15px;">季節ごとのプログラムや、外部講師を招いた楽しいイベントも盛りだくさんですッ！</p>
+        </div>`;
+    }
     updateSidebarTags(allData); 
-  } 
-  else if (targetMode === 'program') {
-    middleBar.style.display = 'none'; 
-    display.innerHTML = `
-      <div class="info-box">
-        <h2>✨ すくわくプログラム</h2>
-        <p>子どもたちが五感をフルに使って「わくわく」を体験する、当園オリジナルの特別カリキュラムです！自然探究、音遊び、創作活動など、遊びの中から生きる力を学んでいきます。</p>
-        <p style="margin-top: 15px;">季節ごとのプログラムや、外部講師を招いた楽しいイベントも盛りだくさんですッ！</p>
-      </div>`;
-    updateSidebarTags(allData);
   }
 }
 
-// 📁 【真ん中のメニュー】をクリックした時
+// 📁 【真ん中のメニュー（タブ）】をクリックした時
 function switchMiddleTab(cat) {
   currentMiddleCat = cat;
   currentTagName = ''; 
+  currentPage = 1; // タブを変えたら1ページ目に戻すよ！
   
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
@@ -271,11 +297,16 @@ function resetMiddleTabActive() {
   });
 }
 
-// 写真カードグリッドを描画するメイン関数
+// 写真カードグリッド ＆ ページネーションを描画するコア関数【鉄壁ガード版】
 function renderDataGrid() {
   const display = document.getElementById('main-content-area');
-  display.innerHTML = '<div class="grid" id="photo-grid"></div>';
+  display.innerHTML = `
+    <div class="grid" id="photo-grid"></div>
+    <div class="pagination-container" id="pagination-box"></div>
+  `;
+  
   const grid = document.getElementById('photo-grid');
+  const pgBox = document.getElementById('pagination-box');
 
   let filtered = allData;
   if (currentMiddleCat !== 'all') {
@@ -288,36 +319,80 @@ function renderDataGrid() {
     filtered = filtered.filter(d => d && d.tags && d.tags.includes(currentTagName));
   }
 
-  if (filtered.length === 0) {
+  if (!filtered || filtered.length === 0) {
     grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; color:#9a8f84;">お写真がありません📷</p>';
+    pgBox.innerHTML = '';
     return;
   }
 
-  filtered.forEach(item => {
+  const totalItems = filtered.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const pageItems = filtered.slice(startIndex, endIndex);
+
+  pageItems.forEach(item => {
     if (!item) return;
     const card = document.createElement('div');
     card.className = 'card';
-    
+    card.style.display = 'flex';
+    card.style.flexDirection = 'column';
+    card.style.height = '100%'; // ✨ これで隣のカードと高さを100%均等に揃えるよ！
+
     let tagsHtml = '';
     if (item.tags && Array.isArray(item.tags)) {
       tagsHtml = item.tags.map(t => `<span style="font-size:11px; color:#bf8740; background:rgba(216,163,93,0.05); padding:3px 8px; border-radius:4px; font-weight:bold; margin-right:5px;">#${t}</span>`).join('');
     }
 
-    // おにーちゃんのデータに入ってる「item.img」の画像URLをそのまんまぶち込むよ！
+    // ✨ 【デスクリプション欠損対策】データが空っぽでも「空白」を代入して表示崩れを完全防御！
+    const displayTitle = item.title ? item.title : '（タイトルなし）';
+    const displayDesc = item.desc ? item.desc : ' '; // 空文字列の時は半角スペースを入れて高さを維持するよ！
+    const displayImg = item.img ? item.img : 'images/hero.jpg';
+
     card.innerHTML = `
-      <div style="position:relative; padding-top:65%; background:#efe5d5;">
-        <img src="${item.img}" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
+      <div style="position:relative; padding-top:65%; background:#efe5d5; flex-shrink:0;">
+        <img src="${displayImg}" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
       </div>
-      <div style="padding:20px; flex-grow:1; display:flex; flex-direction:column;">
-        <h3 style="margin:0 0 10px 0; font-size:16px; color:#4a433c;">${item.title || 'タイトルなし'}</h3>
-        <p style="font-size:13px; color:#746b63; flex-grow:1; margin:0 0 15px 0;">${item.desc || ''}</p>
-        <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:auto;">${tagsHtml}</div>
+      <div style="padding:20px; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+        <h3 style="margin:0 0 10px 0; font-size:16px; color:#4a433c; font-weight:bold;">${displayTitle}</h3>
+        <p style="font-size:13px; color:#746b63; flex-grow:1; margin:0 0 15px 0; white-space: pre-wrap;">${displayDesc}</p>
+        <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:auto; flex-shrink:0;">${tagsHtml}</div>
       </div>`;
     grid.appendChild(card);
   });
+
+  // 📄 ページ番号ボタンの生成ロジック
+  if (totalPages > 1) {
+    let pgHtml = '';
+    const prevDisabled = (currentPage === 1) ? 'disabled' : '';
+    pgHtml += `<button class="page-link ${prevDisabled}" onclick="changePage(${currentPage - 1})">前へ</button>`;
+
+    for (let i = 1; i <= totalPages; i++) {
+      const activeClass = (i === currentPage) ? 'active' : '';
+      pgHtml += `<button class="page-link ${activeClass}" onclick="changePage(${i})">${i}</button>`;
+    }
+
+    const nextDisabled = (currentPage === totalPages) ? 'disabled' : '';
+    pgHtml += `<button class="page-link ${nextDisabled}" onclick="changePage(${currentPage + 1})">次へ</button>`;
+
+    pgBox.innerHTML = pgHtml;
+  } else {
+    pgBox.innerHTML = '';
+  }
 }
 
-// 右カラムのタグリストを動的に書き換えるロジック
+// 📄 ページを切り替える関数
+function changePage(pageNumber) {
+  currentPage = pageNumber;
+  renderDataGrid();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 右カラムのタグリスト動的書き換え
 function updateSidebarTags(data) {
   const tagList = document.getElementById('tag-list');
   const tagSet = new Set();
@@ -342,6 +417,7 @@ function updateSidebarTags(data) {
     btn.textContent = `#${t}`;
     btn.onclick = () => {
       currentTagName = (currentTagName === t) ? '' : t;
+      currentPage = 1; 
       
       if (mode !== 'top') {
         mode = 'top';
