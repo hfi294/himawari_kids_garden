@@ -21,4 +21,76 @@
     ],
     "desc": "てすてすグループホームで5/1に行われたそば打ちイベント"
   }
+  {
+    "img": "images/DSC_0171.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  },
+  {
+    "img": "images/DSC_0173.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  },
+  {
+    "img": "images/DSC_0174.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  },
+  {
+    "img": "images/DSC_0175.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  },
+  {
+    "img": "images/DSC_0178.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  },
+  {
+    "img": "images/DSC_0176.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  },
+  {
+    "img": "images/DSC_0169.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  },
+  {
+    "img": "images/DSC_0170.JPG",
+    "title": "展示会",
+    "category": "event",
+    "tags": [
+      "展示会"
+    ],
+    "desc": ""
+  }
 ]
